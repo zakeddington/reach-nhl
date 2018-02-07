@@ -1,0 +1,14 @@
+
+// Global footer
+// -----------------------------------------------------------------+
+
+.site-footer {
+	background: $color-grey;
+	color: $color-white;
+	min-height: 200px;
+	padding: $vertical-pad 0;
+
+	a {
+		color: $color-white;
+	}
+}
