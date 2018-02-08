@@ -1,9 +1,39 @@
 
-// Homepage View
+// Calendar View
 // -----------------------------------------------------------------+
 
-.page-home {
-	h1 {
-		color: $color-blue;
+.calendar-nav {
+	background: rgba($color-grey, 0.2);
+	border: 1px solid rgba($color-grey, 0.2);
+	display: flex;
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+
+	li {
+		display: flex;
+		flex: 1;
+		margin: 0;
+
+		a {
+			color: $color-grey;
+			display: block;
+			padding: 5px;
+			text-decoration: none;
+			width: 100%;
+
+			&:hover,
+			&:focus {
+				color: $color-grey-dark;
+			}
+		}
+
+		span {
+			background: $color-grey-light;
+			color: $color-grey-dark;
+			display: block;
+			padding: 5px;
+			width: 100%;
+		}
 	}
 }

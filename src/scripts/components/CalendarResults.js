@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class ListGames extends Component {
+class CalendarResults extends Component {
 	// constructor(props) {
 	// 	super(props);
 	// }
@@ -42,11 +42,11 @@ class ListGames extends Component {
 		}
 
 		return (
-			<div className="list-games">
+			<div className="calendar-results">
 				{listItems}
 			</div>
 		);
 	}
 }
 
-export default ListGames;
+export default CalendarResults;

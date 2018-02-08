@@ -17,7 +17,7 @@ export function fetchGames(dateFrom, dateTo) {
 			const games = await nhlService.getAllGames(dateFrom, dateTo);
 			// const topicsByUrl = _.keyBy(games, (subreddit) => subreddit.url);
 
-			console.log('fetchGames', games);
+			console.log('actions fetchGames', games);
 
 			dispatch({ type: types.SCHEDULE_FETCHED, games });
 		} catch (error) {
@@ -32,7 +32,7 @@ export function fetchCalendar() {
 			const calendar = await nhlService.getCalendar();
 			// const topicsByUrl = _.keyBy(games, (subreddit) => subreddit.url);
 
-			console.log('getCalendar', calendar);
+			console.log('actions getCalendar', calendar);
 
 			dispatch({ type: types.CALENDAR_FETCHED, calendar });
 		} catch (error) {

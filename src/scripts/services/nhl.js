@@ -34,7 +34,7 @@ class NHLService {
 		const dates = _.get(data, 'dates');
 		const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-		console.log('dates', dates);
+		console.log('nhl dates', dates);
 
 		const games = _.flatMapDeep(dates, (date) => {
 			let curGames = _.flatMapDeep(date.games, (game) => {
@@ -56,7 +56,7 @@ class NHLService {
 			return curGames;
 		});
 
-		console.log('games', games);
+		console.log('nhl games', games);
 
 
 

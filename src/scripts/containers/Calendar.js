@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 // import './Calendar.css';
 import * as gamesActions from '../store/schedule/actions';
 import * as gamesSelectors from '../store/schedule/reducer';
-import ListMonths from '../components/ListMonths';
-import ListGames from '../components/ListGames';
+import CalendarNav from '../components/CalendarNav';
+import CalendarResults from '../components/CalendarResults';
 
 class Calendar extends Component {
 
@@ -22,6 +22,7 @@ class Calendar extends Component {
 	componentDidMount() {
 		this.props.dispatch(gamesActions.fetchCalendar());
 		this.props.dispatch(gamesActions.fetchGames('2017-09-01', '2017-09-30'));
+		this.selectedNavItem = 'September';
 	}
 
 	render() {
@@ -30,10 +31,10 @@ class Calendar extends Component {
 			return this.renderLoading();
 		}
 		return (
-			<div className="calendar-view">
-				<h3>Calendar</h3>
-				<ListMonths calendar={this.props.calendar} onClick={this.onMonthClick} />
-				<ListGames games={this.props.games} />
+			<div className="site-content container">
+				<h2>2017-2018 Season</h2>
+				<CalendarNav calendar={this.props.calendar} onClick={this.onMonthClick} selectedNavItem={this.selectedNavItem} />
+				<CalendarResults games={this.props.games} />
 			</div>
 		);
 	}
@@ -44,27 +45,10 @@ class Calendar extends Component {
 		);
 	}
 
-	renderRow(topicUrl, topic) {
-		const selected = this.props.selectedTopicsByUrl[topicUrl];
-		return (
-			<ListGames
-				rowId={topicUrl}
-				onClick={this.onRowClick}
-				selected={selected}>
-				<h3>{topic.title}</h3>
-				<p>{topic.description}</p>
-			</ListGames>
-		)
-	}
-
-	onRowClick(topicUrl) {
-		this.props.dispatch(gamesActions.selectTopic(topicUrl));
-	}
-
-	onMonthClick(startDate, endDate) {
+	onMonthClick(startDate, endDate, monthName) {
 		this.props.dispatch(gamesActions.fetchGames(startDate, endDate));
+		this.selectedNavItem = monthName;
 	}
-
 }
 
 // which props do we want to inject, given the global store state?
@@ -75,8 +59,6 @@ function mapStateToProps(state) {
 	return {
 		calendar,
 		games,
-		// selectedTopicsByUrl: gamesSelectors.getSelectedTopicsByUrl(state),
-		// canFinalizeSelection: gamesSelectors.isGameSelectionValid(state)
 	};
 }
 
