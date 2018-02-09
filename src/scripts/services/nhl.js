@@ -33,15 +33,19 @@ class NHLService {
 		const data = await response.json();
 		const dates = _.get(data, 'dates');
 		const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+		let games = [];
 
-		console.log('nhl dates', dates);
+		_.forEach(dates, (date) => {
+			let curDate = new Date(date.date);
 
-		const games = _.flatMapDeep(dates, (date) => {
-			let curGames = _.flatMapDeep(date.games, (game) => {
-				let curDate = new Date(game.gameDate);
+			let modDate = {
+				date: curDate.toLocaleDateString('en-US', dateOptions),
+				games: []
+			};
+
+			_.flatMapDeep(date.games, (game) => {
 				let gameDetail = {
 					id: game.gamePk,
-					date: curDate.toLocaleDateString('en-US', dateOptions),
 					gameState: game.status.abstractGameState,
 					url: NHL_ENDPOINT + game.link,
 					teamHome: game.teams.home.team.name,
@@ -50,42 +54,19 @@ class NHLService {
 					teamAwayScore: game.teams.away.score
 				}
 
-				return gameDetail;
+				modDate.games.push(gameDetail);
 			});
 
-			return curGames;
+			games.push(modDate);
 		});
 
-		console.log('nhl games', games);
-
-
+		console.log('nhl dates', games);
 
 		if (!dates) {
 			throw new Error(`NHLService getAllGames failed, dates not returned`);
 		}
 
-		// const games = _.flatMap(dates, item =>
-		// 								_(item.games).value()
-		// 							);
-
-		// _.flatMap(dates, item =>
-		// 	_(item.values)
-		// 		.filter({ sub: 'fr' })
-		// 		.map(v => ({id: item.id, name: v.name}))
-		// 		.value()
-		// );
-		//
-
 		return (games);
-
-		// return _.map(sortedByDates, (subreddit) => {
-		// 	// abstract away the specifics of the reddit API response and take only the fields we care about
-		// 	return {
-		// 		title: _.get(subreddit, 'data.display_name'),
-		// 		description: _.get(subreddit, 'data.public_description'),
-		// 		url: _.get(subreddit, 'data.url')
-		// 	}
-		// });
 	}
 }
 

@@ -11,11 +11,12 @@ class CalendarNav extends Component {
 
 	createNavItem(month) {
 		let navItem;
+		let url = month.name.toLowerCase();
 
 		if (this.props.selectedNavItem === month.name) {
 			navItem = <span>{month.name}</span>;
 		} else {
-			navItem = <a href={month.name} onClick={(e) => this.onClick(e, month)}>
+			navItem = <a href={url} onClick={(e) => this.onClick(e, month)}>
 				{month.name}
 			</a>;
 		}

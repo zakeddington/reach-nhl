@@ -7,6 +7,7 @@
 	border: 1px solid rgba($color-grey, 0.2);
 	display: flex;
 	font-weight: bold;
+	margin-bottom: 3em;
 	text-align: center;
 	text-transform: uppercase;
 
@@ -29,11 +30,70 @@
 		}
 
 		span {
-			background: $color-grey-light;
+			background: rgba($color-white, 0.9);
 			color: $color-grey-dark;
 			display: block;
 			padding: 5px;
 			width: 100%;
 		}
+	}
+}
+
+.calendar-results {
+	display: flex;
+	flex-wrap: wrap;
+	// justify-content: space-around;
+	margin-bottom: 3em;
+
+	a {
+		background: rgba($color-white, 0.5);
+		border: 1px solid rgba($color-grey, 0.2);
+		color: $color-grey;
+		padding: 0.5em 1em;
+		text-decoration: none;
+
+		&:hover,
+		&:focus {
+			background: $color-white;
+		}
+	}
+
+	li {
+		display: flex;
+		flex-basis: calc(33.3% - 1em);
+		flex-direction: column;
+		line-height: 2;
+		margin: 0 0.5em 0.5em 0;
+
+		&.is-preview {
+			.team-score {
+				display: none;
+			}
+		}
+
+		&.is-away-winner {
+			.team-away {
+				font-weight: bold;
+			}
+		}
+
+		&.is-home-winner {
+			.team-home {
+				font-weight: bold;
+			}
+		}
+	}
+
+	.team-row {
+		display: flex;
+	}
+
+	.team-name {
+		flex: 9;
+	}
+
+	.team-score {
+		flex: 1;
+		text-align: center;
 	}
 }

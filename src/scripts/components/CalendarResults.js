@@ -1,49 +1,66 @@
 import React, { Component } from 'react';
 
 class CalendarResults extends Component {
-	// constructor(props) {
-	// 	super(props);
-	// }
 
-	// componentDidMount() {
-	//
-	// }
+	onClick(e) {
+		e.preventDefault();
+	}
 
 	render() {
-		let listItems;
+		let dates;
 
 		if (this.props.games) {
-			listItems = this.props.games.map(function(game, i) {
-				let curGame;
+			dates = this.props.games.map((date) => {
 
-				switch (game.gameState) {
-					case "Final":
-						if (game.teamHomeScore > game.teamAwayScore) {
-							curGame = <span><strong>{game.teamHome} ({game.teamHomeScore})</strong> vs {game.teamAway} ({game.teamAwayScore})</span>;
-						} else {
-							curGame = <span>{game.teamHome} ({game.teamHomeScore}) vs <strong>{game.teamAway} ({game.teamAwayScore})</strong></span>;
+				let games = date.games.map((game, i) => {
+						let classGameStatus;
+
+						switch (game.gameState) {
+							case "Final":
+								if (game.teamHomeScore > game.teamAwayScore) {
+									classGameStatus = 'is-home-winner';
+								} else {
+									classGameStatus = 'is-away-winner';
+								}
+								break;
+							case "Preview":
+								classGameStatus = 'is-preview';
+								break;
+							default:
+								classGameStatus = '';
+								break;
 						}
-						break;
-					case "Preview":
-						curGame = <span>{game.teamHome} vs {game.teamAway}</span>
-						break;
-					default:
-						curGame = <span>{game.teamHome} ({game.teamHomeScore}) vs {game.teamAway} ({game.teamAwayScore})</span>
-						break;
-				}
+
+						return(
+							<li key={game.id} className={classGameStatus}>
+								<a href={`game/${game.id}`} onClick={(e) => this.onClick(e)}>
+									<div className="team-row team-away">
+										<span className="team-name">{game.teamAway}</span>
+										<span className="team-score">{game.teamAwayScore}</span>
+									</div>
+									<div className="team-row team-home">
+										<span className="team-name">{game.teamHome}</span>
+										<span className="team-score">{game.teamHomeScore}</span>
+									</div>
+								</a>
+							</li>
+						)
+				});
 
 				return(
-					<p key={game.id} data-url={game.url}>
-						{game.date}<br />
-						{curGame}
-					</p>
+					<div key={date.date}>
+						<h3>{date.date}</h3>
+						<ul className="calendar-results">
+							{games}
+						</ul>
+					</div>
 				)
-			})
+			});
 		}
 
 		return (
-			<div className="calendar-results">
-				{listItems}
+			<div className="calendar-container">
+				{dates}
 			</div>
 		);
 	}
