@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Calendar from './Calendar';
+import GameDetail from './GameDetail';
 
 class App extends Component {
 
@@ -10,7 +12,11 @@ class App extends Component {
 		return (
 			<div className="app">
 				<Header/>
-				<Calendar />
+				<Switch>
+					<Route exact path="/" component={Calendar} />
+					<Route path="/game/:id" component={GameDetail} />
+					<Redirect to="/" />
+				</Switch>
 				<Footer/>
 			</div>
 		);
@@ -19,8 +25,8 @@ class App extends Component {
 }
 
 // injects needed parts of the global state to the component through props
-// in this case we nedd and pass everything
-function mapStateToProps(state) {
+// in this case we pass everything
+function mapStateToProps(state, ownProps) {
 	return state;
 }
 

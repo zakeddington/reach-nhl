@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class CalendarResults extends Component {
 
 	onClick(e) {
-		e.preventDefault();
+		// e.preventDefault();
 	}
 
 	render() {
@@ -33,7 +33,7 @@ class CalendarResults extends Component {
 
 						return(
 							<li key={game.id} className={classGameStatus}>
-								<a href={`game/${game.id}`} onClick={(e) => this.onClick(e)}>
+								<a href={`/game/${game.id}`} onClick={(e) => this.onClick(e)}>
 									<div className="team-row team-away">
 										<span className="team-name">{game.teamAway}</span>
 										<span className="team-score">{game.teamAwayScore}</span>

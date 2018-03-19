@@ -5,12 +5,7 @@ class Header extends Component {
 		return (
 			<header className="site-header">
 				<div className="container">
-					<h1>NHL Game Stats</h1>
-					{/*
-					<div className="header--logo">
-						 <img src='assets/img/banner.png' alt="POP"/>
-					</div>
-					*/}
+					<h1><a href="/">NHL Game Stats</a></h1>
 				</div>
 			</header>
 		);

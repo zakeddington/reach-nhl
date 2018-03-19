@@ -8,28 +8,14 @@
 import * as types from './actionTypes';
 import nhlService from '../../services/nhl';
 
-export function fetchGames(dateFrom, dateTo) {
+export function fetchGameDetail(gameId) {
 	return async(dispatch, getState) => {
 		try {
-			const games = await nhlService.getAllGames(dateFrom, dateTo);
+			const gameDetail = await nhlService.getGameDetail(gameId);
 
-			console.log('actions fetchGames', games);
+			console.log('actions fetchGameDetail', gameDetail);
 
-			dispatch({ type: types.SCHEDULE_FETCHED, games });
-		} catch (error) {
-			console.error(error);
-		}
-	};
-}
-
-export function fetchCalendar() {
-	return async(dispatch, getState) => {
-		try {
-			const calendar = await nhlService.getCalendar();
-
-			console.log('actions getCalendar', calendar);
-
-			dispatch({ type: types.CALENDAR_FETCHED, calendar });
+			dispatch({ type: types.GAME_FETCHED, gameDetail });
 		} catch (error) {
 			console.error(error);
 		}

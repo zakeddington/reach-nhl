@@ -9,6 +9,8 @@ import calendar from '../store/schedule/Calendar2017-2018';
 const NHL_ENDPOINT = 'https://statsapi.web.nhl.com';
 const ALL_GAMES_FROM = '/api/v1/schedule?startDate=';
 const ALL_GAMES_TO = '&endDate=';
+const GAME_DETAIL_FROM = '/api/v1/game/';
+const GAME_DETAIL_TO = '/feed/live/';
 
 class NHLService {
 
@@ -36,7 +38,7 @@ class NHLService {
 		let games = [];
 
 		_.forEach(dates, (date) => {
-			let curDate = new Date(date.date);
+			let curDate = new Date(date.date.replace(/-/g, '/'));
 
 			let modDate = {
 				date: curDate.toLocaleDateString('en-US', dateOptions),
@@ -60,13 +62,40 @@ class NHLService {
 			games.push(modDate);
 		});
 
-		console.log('nhl dates', games);
+		console.log('nhl getAllGames', games);
 
 		if (!dates) {
 			throw new Error(`NHLService getAllGames failed, dates not returned`);
 		}
 
 		return (games);
+	}
+
+	async getGameDetail(gameId) {
+		const url = `${NHL_ENDPOINT}${GAME_DETAIL_FROM}${gameId}${GAME_DETAIL_TO}`;
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json'
+			}
+		});
+
+		if (!response.ok) {
+			throw new Error(`NHLService getAllGames failed, HTTP status ${response.status}`);
+		}
+
+		const data = await response.json();
+
+		let gameDetail = {
+			teamHome: data.liveData.boxscore.teams.home.team.name,
+			teamHomeScore: data.liveData.boxscore.teams.home.teamStats.teamSkaterStats.goals,
+			teamAway: data.liveData.boxscore.teams.away.team.name,
+			teamAwayScore: data.liveData.boxscore.teams.away.teamStats.teamSkaterStats.goals
+		}
+
+		console.log('nhl getGameDetail', gameDetail);
+
+		return (gameDetail);
 	}
 }
 
