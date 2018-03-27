@@ -53,7 +53,7 @@ class NHLService {
 					teamHome: game.teams.home.team.name,
 					teamHomeScore: game.teams.home.score,
 					teamAway: game.teams.away.team.name,
-					teamAwayScore: game.teams.away.score
+					teamAwayScore: game.teams.away.score,
 				}
 
 				modDate.games.push(gameDetail);
@@ -85,17 +85,68 @@ class NHLService {
 		}
 
 		const data = await response.json();
+		const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+		let curDate = new Date(data.gameData.datetime.dateTime);
+		let awayScore = data.liveData.linescore.teams.away.goals;
+		let homeScore = data.liveData.linescore.teams.home.goals;
+
+		const periodGoals = _.get(data, 'liveData.linescore.periods');
+		const shootoutGoals = _.get(data, 'liveData.linescore.shootoutInfo');
+
+		let periods = this.getPeriodStats(periodGoals, awayScore, homeScore, shootoutGoals);
 
 		let gameDetail = {
-			teamHome: data.liveData.boxscore.teams.home.team.name,
-			teamHomeScore: data.liveData.boxscore.teams.home.teamStats.teamSkaterStats.goals,
-			teamAway: data.liveData.boxscore.teams.away.team.name,
-			teamAwayScore: data.liveData.boxscore.teams.away.teamStats.teamSkaterStats.goals
+			// why does a nested object not work?
+			// home: {...},
+			// away: {...},
+			date: curDate.toLocaleDateString('en-US', dateOptions),
+			status: data.gameData.status.detailedState,
+			periodGoals: periods,
+			teamHomeCity: data.gameData.teams.home.locationName,
+			teamHomeName: data.gameData.teams.home.teamName,
+			teamHomeScore: homeScore,
+			teamAwayCity: data.gameData.teams.away.locationName,
+			teamAwayName: data.gameData.teams.away.teamName,
+			teamAwayScore: awayScore,
 		}
 
 		console.log('nhl getGameDetail', gameDetail);
 
 		return (gameDetail);
+	}
+
+	getPeriodStats(periodGoals, awayScore, homeScore, shootoutGoals) {
+		let periods = [];
+		let periodsTotal = ['T', awayScore, homeScore];
+
+		_.forEach(periodGoals, (period) => {
+			let curPeriod = [];
+			let periodName = period.ordinalNum;
+			let awayGoals = period.away.goals;
+			let homeGoals = period.home.goals;
+
+			if (periodName === 'OT') {
+				if (awayGoals + homeGoals <= 0) {
+					curPeriod.push('SO');
+					curPeriod.push(shootoutGoals.away.scores);
+					curPeriod.push(shootoutGoals.home.scores);
+				} else {
+					curPeriod.push(periodName);
+					curPeriod.push(awayGoals);
+					curPeriod.push(homeGoals);
+				}
+			} else {
+				curPeriod.push(periodName);
+				curPeriod.push(awayGoals);
+				curPeriod.push(homeGoals);
+			}
+
+			periods.push(curPeriod);
+		});
+
+		periods.push(periodsTotal);
+
+		return periods;
 	}
 }
 

@@ -1,0 +1,102 @@
+
+// Score Overview
+// -----------------------------------------------------------------+
+
+.game-detail-header {
+	align-items: center;
+	border-bottom: 1px solid $color-grey-med;
+	display: flex;
+	padding: 2em 0;
+	text-align: center;
+
+	.col {
+		align-items: center;
+		display: flex;
+		flex: 2;
+		flex-basis: calc(33.3% - 1em);
+		flex-direction: row;
+		line-height: 2;
+
+		&.team-away {
+			color: $color-grey-dark;
+			justify-content: flex-end;
+			text-align: right;
+		}
+
+		&.team-home {
+			color: $color-grey-dark;
+			justify-content: flex-start;
+			text-align: left;
+		}
+
+		&.game-date {
+			flex: 1;
+			justify-content: center;
+			padding: 0 3em;
+			white-space: nowrap;
+		}
+	}
+
+	.team-name {
+		display: flex;
+		flex-direction: column;
+		line-height: 1;
+
+		.city {
+			text-transform: uppercase;
+		}
+
+		.name {
+			font-size: 2em;
+			font-weight: bold;
+		}
+	}
+
+	.team-score {
+		font-size: 3em;
+		line-height: 1;
+		padding-left: 1em;
+	}
+}
+
+// Period Overview
+// -----------------------------------------------------------------+
+
+.game-detail-boxscore {
+	color: $color-grey-dark;
+	display: flex;
+	font-size: 1.2em;
+	margin: 2em auto;
+	width: 30%;
+
+	.col {
+		flex: 1;
+
+		&:last-child {
+			font-weight: bold;
+		}
+
+		&.teams {
+			flex: 3;
+		}
+	}
+
+	.item {
+		border-bottom: 1px solid $color-grey-med;
+		display: block;
+		padding: 0.5em 0;
+
+		&:first-child {
+			color: $color-grey;
+			font-size: 0.8em;
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		&.goals {
+			text-align: center;
+		}
+	}
+}

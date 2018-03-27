@@ -6,9 +6,10 @@
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 import { connect } from 'react-redux';
-// import './Calendar.css';
 import * as gamesActions from '../store/game-detail/actions';
 import * as gamesSelectors from '../store/game-detail/reducer';
+import Header from '../components/GameDetailHeader';
+import BoxScore from '../components/GameDetailBoxScore';
 
 class GameDetail extends Component {
 
@@ -25,19 +26,11 @@ class GameDetail extends Component {
 	}
 
 	render() {
-		let gameDetail = this.props.gameDetail;
 
 		return (
 			<div className="site-content container">
-				<h2>Game Detail</h2>
-				<div className="team-row team-away">
-					<span className="team-name">{gameDetail.teamAway}</span>
-					<span className="team-score">{gameDetail.teamAwayScore}</span>
-				</div>
-				<div className="team-row team-home">
-					<span className="team-name">{gameDetail.teamHome}</span>
-					<span className="team-score">{gameDetail.teamHomeScore}</span>
-				</div>
+				<Header gameDetail={this.props.gameDetail} />
+				<BoxScore gameDetail={this.props.gameDetail} />
 			</div>
 		);
 	}
