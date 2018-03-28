@@ -116,6 +116,11 @@
 		flex: 1;
 		font-size: 1.5em;
 		font-weight: normal;
-		text-align: center;
+		text-align: right;
+	}
+
+	.game-state {
+		border-bottom: 1px solid $color-grey-med;
+		font-size: 0.8em;
 	}
 }

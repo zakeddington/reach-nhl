@@ -30,12 +30,10 @@ export default function reduce(state = initialState, action = {}) {
 // selectors
 
 export function getCalendar(state) {
-	console.log('reducer getCalendar', state);
 	return state.schedule.calendar;
 }
 
 export function getGames(state) {
-	console.log('reducer getGames', state);
 	return state.schedule.games;
 }
 

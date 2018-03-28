@@ -20,7 +20,7 @@ class GameDetailBoxScore extends Component {
 		return (
 			<header className="game-detail-boxscore">
 				<div className="col teams">
-					<span className="item status">{data.status}</span>
+					<span className="item">{data.gameState}</span>
 					<span className="item name">{data.teamAwayName}</span>
 					<span className="item name">{data.teamHomeName}</span>
 				</div>

@@ -3,53 +3,46 @@
 // normally, our interface to any sort of server API will be as a service
 
 import _ from 'lodash';
-
+import API from './API';
 import calendar from '../store/schedule/Calendar2017-2018';
 
-const NHL_ENDPOINT = 'https://statsapi.web.nhl.com';
-const ALL_GAMES_FROM = '/api/v1/schedule?startDate=';
-const ALL_GAMES_TO = '&endDate=';
-const GAME_DETAIL_FROM = '/api/v1/game/';
-const GAME_DETAIL_TO = '/feed/live/';
+const LANG = 'en-US';
+const DATE_OPTIONS = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const TIME_OPTIONS = {timeZone: 'America/New_York', hour: '2-digit', minute:'2-digit', timeZoneName: 'short' };
 
 class NHLService {
 
 	async getCalendar() {
-		console.log('nhl getCalendar', calendar);
 		return (calendar);
 	}
 
-	async getAllGames(dateFrom, dateTo) {
-		const url = `${NHL_ENDPOINT}${ALL_GAMES_FROM}${dateFrom}${ALL_GAMES_TO}${dateTo}`;
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: {
-				Accept: 'application/json'
-			}
-		});
-
-		if (!response.ok) {
-			throw new Error(`NHLService getAllGames failed, HTTP status ${response.status}`);
-		}
-
-		const data = await response.json();
+	async getAllGames(dateFrom, dateTo, params) {
+		const data = await API.getSchedule(dateFrom, dateTo, params);
 		const dates = _.get(data, 'dates');
-		const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 		let games = [];
 
 		_.forEach(dates, (date) => {
 			let curDate = new Date(date.date.replace(/-/g, '/'));
 
 			let modDate = {
-				date: curDate.toLocaleDateString('en-US', dateOptions),
+				date: curDate.toLocaleDateString(LANG, DATE_OPTIONS),
 				games: []
 			};
 
 			_.flatMapDeep(date.games, (game) => {
+				let time = new Date(game.gameDate).toLocaleTimeString(LANG, TIME_OPTIONS);
+				let state = this.getGameState(game.linescore);
+				let curState;
+
+				if (state.length) {
+					curState = state;
+				} else {
+					curState = time;
+				}
+
 				let gameDetail = {
 					id: game.gamePk,
-					gameState: game.status.abstractGameState,
-					url: NHL_ENDPOINT + game.link,
+					gameState: curState,
 					teamAway: game.teams.away.team.name,
 					teamAwayScore: game.teams.away.score,
 					teamAwayRecord: `${game.teams.away.leagueRecord.wins}-${game.teams.away.leagueRecord.losses}-${game.teams.away.leagueRecord.ot}`,
@@ -74,36 +67,31 @@ class NHLService {
 	}
 
 	async getGameDetail(gameId) {
-		const url = `${NHL_ENDPOINT}${GAME_DETAIL_FROM}${gameId}${GAME_DETAIL_TO}`;
-		const response = await fetch(url, {
-			method: 'GET',
-			headers: {
-				Accept: 'application/json'
-			}
-		});
-
-		if (!response.ok) {
-			throw new Error(`NHLService getAllGames failed, HTTP status ${response.status}`);
-		}
-
-		const data = await response.json();
-		const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-		let curDate = new Date(data.gameData.datetime.dateTime);
-		let awayScore = data.liveData.linescore.teams.away.goals;
-		let homeScore = data.liveData.linescore.teams.home.goals;
-
+		const data = await API.getGame(gameId);
 		const periodGoals = _.get(data, 'liveData.linescore.periods');
 		const shootoutGoals = _.get(data, 'liveData.linescore.shootoutInfo');
 
+		let date = new Date(data.gameData.datetime.dateTime);
+		let curDate = date.toLocaleDateString(LANG, DATE_OPTIONS);
+		let time = date.toLocaleTimeString(LANG, TIME_OPTIONS);
+		let awayScore = data.liveData.linescore.teams.away.goals;
+		let homeScore = data.liveData.linescore.teams.home.goals;
 		let periods = this.getPeriodStats(periodGoals, awayScore, homeScore, shootoutGoals);
-		let status = this.getGameStatus(data);
+		let state = this.getGameState(data.liveData.linescore);
+		let curState;
+
+		if (state.length) {
+			curState = state;
+		} else {
+			curState = time;
+		}
 
 		let gameDetail = {
 			// why does a nested object not work?
 			// home: {...},
 			// away: {...},
-			date: curDate.toLocaleDateString('en-US', dateOptions),
-			status: status,
+			date: curDate,
+			gameState: curState,
 			periodGoals: periods,
 			teamHomeCity: data.gameData.teams.home.locationName,
 			teamHomeName: data.gameData.teams.home.teamName,
@@ -118,14 +106,23 @@ class NHLService {
 		return (gameDetail);
 	}
 
-	getGameStatus(data) {
-		let curStatus = data.gameData.status.detailedState;
+	getGameState(linescoreData) {
+		let data = linescoreData;
+		let curPeriod = data.currentPeriod;
+		let curPeriodName = data.currentPeriodOrdinal;
+		let curTime = data.currentPeriodTimeRemaining;
+		let curStatus = '';
 
-		if (curStatus !== 'Final') {
-			let curPeriod = data.liveData.linescore.currentPeriodOrdinal;
-			let curTime = data.liveData.linescore.currentPeriodTimeRemaining;
-
-			curStatus = `${curPeriod} | ${curTime}`;
+		if (curPeriod > 0) {
+			if (curTime !== 'Final') {
+				curStatus = `${curPeriodName} | ${curTime}`;
+			} else {
+				if (curPeriod === 3) {
+					curStatus = `${curTime}`;
+				} else {
+					curStatus = `${curTime}/${curPeriodName}`;
+				}
+			}
 		}
 
 		return curStatus;
@@ -135,32 +132,34 @@ class NHLService {
 		let periods = [];
 		let periodsTotal = ['T', awayScore, homeScore];
 
-		_.forEach(periodGoals, (period) => {
-			let curPeriod = [];
-			let periodName = period.ordinalNum;
-			let awayGoals = period.away.goals;
-			let homeGoals = period.home.goals;
+		if (periodGoals.length) {
+			_.forEach(periodGoals, (period) => {
+				let curPeriod = [];
+				let periodName = period.ordinalNum;
+				let awayGoals = period.away.goals;
+				let homeGoals = period.home.goals;
 
-			if (periodName === 'OT') {
-				if (awayGoals + homeGoals <= 0) {
-					curPeriod.push('SO');
-					curPeriod.push(shootoutGoals.away.scores);
-					curPeriod.push(shootoutGoals.home.scores);
+				if (periodName === 'OT') {
+					if (awayGoals + homeGoals <= 0) {
+						curPeriod.push('SO');
+						curPeriod.push(shootoutGoals.away.scores);
+						curPeriod.push(shootoutGoals.home.scores);
+					} else {
+						curPeriod.push(periodName);
+						curPeriod.push(awayGoals);
+						curPeriod.push(homeGoals);
+					}
 				} else {
 					curPeriod.push(periodName);
 					curPeriod.push(awayGoals);
 					curPeriod.push(homeGoals);
 				}
-			} else {
-				curPeriod.push(periodName);
-				curPeriod.push(awayGoals);
-				curPeriod.push(homeGoals);
-			}
 
-			periods.push(curPeriod);
-		});
+				periods.push(curPeriod);
+			});
 
-		periods.push(periodsTotal);
+			periods.push(periodsTotal);
+		}
 
 		return periods;
 	}

@@ -13,27 +13,22 @@ class CalendarResults extends Component {
 			dates = this.props.games.map((date) => {
 
 				let games = date.games.map((game, i) => {
-						let classGameStatus;
+						let classGameStatus = '';
 
-						switch (game.gameState) {
-							case "Final":
-								if (game.teamHomeScore > game.teamAwayScore) {
-									classGameStatus = 'is-home-winner';
-								} else {
-									classGameStatus = 'is-away-winner';
-								}
-								break;
-							case "Preview":
-								classGameStatus = 'is-preview';
-								break;
-							default:
-								classGameStatus = '';
-								break;
+						if (game.gameState.includes("Final")) {
+							if (game.teamHomeScore > game.teamAwayScore) {
+								classGameStatus = 'is-home-winner';
+							} else {
+								classGameStatus = 'is-away-winner';
+							}
+						} else if (game.gameState === "Preview") {
+							classGameStatus = 'is-preview';
 						}
 
 						return(
 							<li key={game.id} className={classGameStatus}>
 								<a href={`/game/${game.id}`} onClick={(e) => this.onClick(e)}>
+									<div className="game-state">{game.gameState}</div>
 									<div className="team-row team-away">
 										<span className="team-name">{game.teamAway}
 											<span className="team-record">({game.teamAwayRecord})</span>

@@ -21,8 +21,8 @@ class Calendar extends Component {
 
 	componentDidMount() {
 		this.props.dispatch(gamesActions.fetchCalendar());
-		this.props.dispatch(gamesActions.fetchGames('2017-09-01', '2017-09-30'));
-		this.selectedNavItem = 'September';
+		this.props.dispatch(gamesActions.fetchGames('2018-03-01', '2018-03-31'));
+		this.selectedNavItem = 'March';
 	}
 
 	render() {

@@ -21,7 +21,7 @@ class GameDetail extends Component {
 	componentDidMount() {
 		let path = this.props.location.pathname;
 		let gameId = path.match(/([^/]*)\/*$/)[1];
-		console.log('game detail componentDidMount gameId', gameId);
+
 		this.props.dispatch(gamesActions.fetchGameDetail(gameId));
 	}
 

@@ -11,10 +11,10 @@ import nhlService from '../../services/nhl';
 export function fetchGames(dateFrom, dateTo) {
 	return async(dispatch, getState) => {
 		try {
-			const games = await nhlService.getAllGames(dateFrom, dateTo);
-
-			console.log('actions fetchGames', games);
-
+			const params = [
+				'schedule.linescore'
+			];
+			const games = await nhlService.getAllGames(dateFrom, dateTo, params);
 			dispatch({ type: types.SCHEDULE_FETCHED, games });
 		} catch (error) {
 			console.error(error);
@@ -26,9 +26,6 @@ export function fetchCalendar() {
 	return async(dispatch, getState) => {
 		try {
 			const calendar = await nhlService.getCalendar();
-
-			console.log('actions getCalendar', calendar);
-
 			dispatch({ type: types.CALENDAR_FETCHED, calendar });
 		} catch (error) {
 			console.error(error);
