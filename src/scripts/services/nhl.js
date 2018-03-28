@@ -50,10 +50,12 @@ class NHLService {
 					id: game.gamePk,
 					gameState: game.status.abstractGameState,
 					url: NHL_ENDPOINT + game.link,
-					teamHome: game.teams.home.team.name,
-					teamHomeScore: game.teams.home.score,
 					teamAway: game.teams.away.team.name,
 					teamAwayScore: game.teams.away.score,
+					teamAwayRecord: `${game.teams.away.leagueRecord.wins}-${game.teams.away.leagueRecord.losses}-${game.teams.away.leagueRecord.ot}`,
+					teamHome: game.teams.home.team.name,
+					teamHomeScore: game.teams.home.score,
+					teamHomeRecord: `${game.teams.home.leagueRecord.wins}-${game.teams.home.leagueRecord.losses}-${game.teams.home.leagueRecord.ot}`,
 				}
 
 				modDate.games.push(gameDetail);
@@ -94,13 +96,14 @@ class NHLService {
 		const shootoutGoals = _.get(data, 'liveData.linescore.shootoutInfo');
 
 		let periods = this.getPeriodStats(periodGoals, awayScore, homeScore, shootoutGoals);
+		let status = this.getGameStatus(data);
 
 		let gameDetail = {
 			// why does a nested object not work?
 			// home: {...},
 			// away: {...},
 			date: curDate.toLocaleDateString('en-US', dateOptions),
-			status: data.gameData.status.detailedState,
+			status: status,
 			periodGoals: periods,
 			teamHomeCity: data.gameData.teams.home.locationName,
 			teamHomeName: data.gameData.teams.home.teamName,
@@ -113,6 +116,19 @@ class NHLService {
 		console.log('nhl getGameDetail', gameDetail);
 
 		return (gameDetail);
+	}
+
+	getGameStatus(data) {
+		let curStatus = data.gameData.status.detailedState;
+
+		if (curStatus !== 'Final') {
+			let curPeriod = data.liveData.linescore.currentPeriodOrdinal;
+			let curTime = data.liveData.linescore.currentPeriodTimeRemaining;
+
+			curStatus = `${curPeriod} | ${curTime}`;
+		}
+
+		return curStatus;
 	}
 
 	getPeriodStats(periodGoals, awayScore, homeScore, shootoutGoals) {

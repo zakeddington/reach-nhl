@@ -35,11 +35,15 @@ class CalendarResults extends Component {
 							<li key={game.id} className={classGameStatus}>
 								<a href={`/game/${game.id}`} onClick={(e) => this.onClick(e)}>
 									<div className="team-row team-away">
-										<span className="team-name">{game.teamAway}</span>
+										<span className="team-name">{game.teamAway}
+											<span className="team-record">({game.teamAwayRecord})</span>
+										</span>
 										<span className="team-score">{game.teamAwayScore}</span>
 									</div>
 									<div className="team-row team-home">
-										<span className="team-name">{game.teamHome}</span>
+										<span className="team-name">{game.teamHome}
+											<span className="team-record">({game.teamHomeRecord})</span>
+										</span>
 										<span className="team-score">{game.teamHomeScore}</span>
 									</div>
 								</a>
