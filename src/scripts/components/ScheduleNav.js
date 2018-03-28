@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CalendarNav extends Component {
+class ScheduleNav extends Component {
 
 	onClick(e, month) {
 		e.preventDefault();
@@ -26,9 +26,9 @@ class CalendarNav extends Component {
 
 	render() {
 		return (
-			<ul className="calendar-nav">
+			<ul className="schedule-nav">
 				{
-					this.props.calendar.map((month, i) => {
+					this.props.scheduleNav.map((month, i) => {
 						return(
 							<li key={month.name}>
 								{this.createNavItem(month)}
@@ -41,4 +41,4 @@ class CalendarNav extends Component {
 	}
 }
 
-export default CalendarNav;
+export default ScheduleNav;

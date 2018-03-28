@@ -12,11 +12,11 @@ const TIME_OPTIONS = {timeZone: 'America/New_York', hour: '2-digit', minute:'2-d
 
 class NHLService {
 
-	async getCalendar() {
+	async getScheduleNav() {
 		return (calendar);
 	}
 
-	async getAllGames(dateFrom, dateTo, params) {
+	async getScheduleGames(dateFrom, dateTo, params) {
 		const data = await API.getSchedule(dateFrom, dateTo, params);
 		const dates = _.get(data, 'dates');
 		let games = [];

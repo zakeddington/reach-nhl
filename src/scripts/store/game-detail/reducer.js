@@ -13,7 +13,7 @@ const initialState = immutable({
 
 export default function reduce(state = initialState, action = {}) {
 	switch (action.type) {
-		case types.GAME_FETCHED:
+		case types.GAME_DETAIL_FETCHED:
 			return state.merge({
 				gameDetail: action.gameDetail
 			});

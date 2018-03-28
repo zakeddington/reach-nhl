@@ -1,8 +1,8 @@
 
-// Calendar View
+// Schedule View
 // -----------------------------------------------------------------+
 
-.calendar-nav {
+.schedule-nav {
 	background: rgba($color-grey, 0.2);
 	border: 1px solid rgba($color-grey, 0.2);
 	display: flex;
@@ -39,7 +39,7 @@
 	}
 }
 
-.calendar-results {
+.schedule-results {
 	display: flex;
 	flex-wrap: wrap;
 	// justify-content: space-around;

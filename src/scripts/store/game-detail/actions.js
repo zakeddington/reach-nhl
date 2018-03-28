@@ -15,7 +15,7 @@ export function fetchGameDetail(gameId) {
 
 			console.log('actions fetchGameDetail', gameDetail);
 
-			dispatch({ type: types.GAME_FETCHED, gameDetail });
+			dispatch({ type: types.GAME_DETAIL_FETCHED, gameDetail });
 		} catch (error) {
 			console.error(error);
 		}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CalendarResults extends Component {
+class ScheduleResults extends Component {
 
 	onClick(e) {
 		// e.preventDefault();
@@ -9,8 +9,8 @@ class CalendarResults extends Component {
 	render() {
 		let dates;
 
-		if (this.props.games) {
-			dates = this.props.games.map((date) => {
+		if (this.props.scheduleGames) {
+			dates = this.props.scheduleGames.map((date) => {
 
 				let games = date.games.map((game, i) => {
 						let classGameStatus = '';
@@ -49,7 +49,7 @@ class CalendarResults extends Component {
 				return(
 					<div key={date.date}>
 						<h3>{date.date}</h3>
-						<ul className="calendar-results">
+						<ul className="schedule-results">
 							{games}
 						</ul>
 					</div>
@@ -58,11 +58,11 @@ class CalendarResults extends Component {
 		}
 
 		return (
-			<div className="calendar-container">
+			<div className="schedule-container">
 				{dates}
 			</div>
 		);
 	}
 }
 
-export default CalendarResults;
+export default ScheduleResults;

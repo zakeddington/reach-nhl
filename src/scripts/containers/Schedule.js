@@ -6,13 +6,12 @@
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 import { connect } from 'react-redux';
-// import './Calendar.css';
 import * as gamesActions from '../store/schedule/actions';
 import * as gamesSelectors from '../store/schedule/reducer';
-import CalendarNav from '../components/CalendarNav';
-import CalendarResults from '../components/CalendarResults';
+import ScheduleNav from '../components/ScheduleNav';
+import ScheduleResults from '../components/ScheduleResults';
 
-class Calendar extends Component {
+class Schedule extends Component {
 
 	constructor(props) {
 		super(props);
@@ -20,21 +19,21 @@ class Calendar extends Component {
 	}
 
 	componentDidMount() {
-		this.props.dispatch(gamesActions.fetchCalendar());
-		this.props.dispatch(gamesActions.fetchGames('2018-03-01', '2018-03-31'));
+		this.props.dispatch(gamesActions.fetchScheduleNav());
+		this.props.dispatch(gamesActions.fetchScheduleGames('2018-03-01', '2018-03-31'));
 		this.selectedNavItem = 'March';
 	}
 
 	render() {
 		console.warn('render this.props', this.props);
-		if (!this.props.games) {
+		if (!this.props.scheduleGames) {
 			return this.renderLoading();
 		}
 		return (
 			<div className="site-content container">
 				<h2>2017-2018 Season</h2>
-				<CalendarNav calendar={this.props.calendar} onClick={this.onMonthClick} selectedNavItem={this.selectedNavItem} />
-				<CalendarResults games={this.props.games} />
+				<ScheduleNav scheduleNav={this.props.scheduleNav} onClick={this.onMonthClick} selectedNavItem={this.selectedNavItem} />
+				<ScheduleResults scheduleGames={this.props.scheduleGames} />
 			</div>
 		);
 	}
@@ -46,7 +45,7 @@ class Calendar extends Component {
 	}
 
 	onMonthClick(startDate, endDate, monthName) {
-		this.props.dispatch(gamesActions.fetchGames(startDate, endDate));
+		this.props.dispatch(gamesActions.fetchScheduleGames(startDate, endDate));
 		this.selectedNavItem = monthName;
 	}
 }
@@ -54,12 +53,12 @@ class Calendar extends Component {
 // which props do we want to inject, given the global store state?
 // always use selectors here and avoid accessing the state directly
 function mapStateToProps(state) {
-	const calendar = gamesSelectors.getCalendar(state);
-	const games = gamesSelectors.getGames(state);
+	const scheduleNav = gamesSelectors.getScheduleNav(state);
+	const scheduleGames = gamesSelectors.getScheduleGames(state);
 	return {
-		calendar,
-		games,
+		scheduleNav,
+		scheduleGames,
 	};
 }
 
-export default connect(mapStateToProps)(Calendar);
+export default connect(mapStateToProps)(Schedule);

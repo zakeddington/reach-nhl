@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Calendar from './Calendar';
+import Schedule from './Schedule';
 import GameDetail from './GameDetail';
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
 			<div className="app">
 				<Header/>
 				<Switch>
-					<Route exact path="/" component={Calendar} />
+					<Route exact path="/" component={Schedule} />
 					<Route path="/game/:id" component={GameDetail} />
 					<Redirect to="/" />
 				</Switch>
