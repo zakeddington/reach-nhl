@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import * as gamesActions from '../store/game-detail/actions';
 import * as gamesSelectors from '../store/game-detail/reducer';
 import Header from '../components/GameDetailHeader';
-import BoxScore from '../components/GameDetailBoxScore';
+import Scoreboard from '../components/GameDetailScoreboard';
 
 class GameDetail extends Component {
 
@@ -30,7 +30,7 @@ class GameDetail extends Component {
 		return (
 			<div className="site-content container">
 				<Header gameDetail={this.props.gameDetail} />
-				<BoxScore gameDetail={this.props.gameDetail} />
+				<Scoreboard gameDetail={this.props.gameDetail} />
 			</div>
 		);
 	}

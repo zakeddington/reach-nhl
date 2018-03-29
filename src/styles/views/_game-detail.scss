@@ -31,9 +31,15 @@
 
 		&.game-date {
 			flex: 1;
+			flex-direction: column;
 			justify-content: center;
+			line-height: 1.5;
 			padding: 0 3em;
 			white-space: nowrap;
+
+			.game-time {
+				font-weight: bold;
+			}
 		}
 	}
 
@@ -62,7 +68,7 @@
 // Period Overview
 // -----------------------------------------------------------------+
 
-.game-detail-boxscore {
+.game-detail-scoreboard {
 	color: $color-grey-dark;
 	display: flex;
 	font-size: 1.2em;

@@ -19,51 +19,55 @@ class NHLService {
 	async getScheduleGames(dateFrom, dateTo, params) {
 		const data = await API.getSchedule(dateFrom, dateTo, params);
 		const dates = _.get(data, 'dates');
-		let games = [];
+		let results = [];
 
 		_.forEach(dates, (date) => {
 			let curDate = new Date(date.date.replace(/-/g, '/'));
 
-			let modDate = {
+			let curResults = {
 				date: curDate.toLocaleDateString(LANG, DATE_OPTIONS),
 				games: []
 			};
 
 			_.flatMapDeep(date.games, (game) => {
-				let time = new Date(game.gameDate).toLocaleTimeString(LANG, TIME_OPTIONS);
-				let state = this.getGameState(game.linescore);
+				let startTime = new Date(game.gameDate).toLocaleTimeString(LANG, TIME_OPTIONS);
+				let gameState = this.getGameState(game.linescore);
 				let curState;
+				let awayScore = '';
+				let homeScore = '';
 
-				if (state.length) {
-					curState = state;
+				if (gameState.length) {
+					curState = gameState;
+					awayScore = game.teams.away.score;
+					homeScore = game.teams.home.score;
 				} else {
-					curState = time;
+					curState = startTime;
 				}
 
 				let gameDetail = {
 					id: game.gamePk,
 					gameState: curState,
 					teamAway: game.teams.away.team.name,
-					teamAwayScore: game.teams.away.score,
+					teamAwayScore: awayScore,
 					teamAwayRecord: `${game.teams.away.leagueRecord.wins}-${game.teams.away.leagueRecord.losses}-${game.teams.away.leagueRecord.ot}`,
 					teamHome: game.teams.home.team.name,
-					teamHomeScore: game.teams.home.score,
+					teamHomeScore: homeScore,
 					teamHomeRecord: `${game.teams.home.leagueRecord.wins}-${game.teams.home.leagueRecord.losses}-${game.teams.home.leagueRecord.ot}`,
 				}
 
-				modDate.games.push(gameDetail);
+				curResults.games.push(gameDetail);
 			});
 
-			games.push(modDate);
+			results.push(curResults);
 		});
 
-		console.log('nhl getAllGames', games);
+		console.log('nhl getScheduleGames results', results);
 
 		if (!dates) {
-			throw new Error(`NHLService getAllGames failed, dates not returned`);
+			throw new Error(`NHLService getScheduleGames failed, dates not returned`);
 		}
 
-		return (games);
+		return (results);
 	}
 
 	async getGameDetail(gameId) {
@@ -73,37 +77,40 @@ class NHLService {
 
 		let date = new Date(data.gameData.datetime.dateTime);
 		let curDate = date.toLocaleDateString(LANG, DATE_OPTIONS);
-		let time = date.toLocaleTimeString(LANG, TIME_OPTIONS);
+		let startTime = date.toLocaleTimeString(LANG, TIME_OPTIONS);
 		let awayScore = data.liveData.linescore.teams.away.goals;
 		let homeScore = data.liveData.linescore.teams.home.goals;
 		let periods = this.getPeriodStats(periodGoals, awayScore, homeScore, shootoutGoals);
-		let state = this.getGameState(data.liveData.linescore);
+		let gameState = this.getGameState(data.liveData.linescore);
 		let curState;
+		let isPreview = true;
 
-		if (state.length) {
-			curState = state;
+		if (gameState.length) {
+			curState = gameState;
+			isPreview = false;
 		} else {
-			curState = time;
+			curState = startTime;
 		}
 
-		let gameDetail = {
+		let results = {
 			// why does a nested object not work?
 			// home: {...},
 			// away: {...},
+			isPreview: isPreview,
 			date: curDate,
 			gameState: curState,
 			periodGoals: periods,
-			teamHomeCity: data.gameData.teams.home.locationName,
-			teamHomeName: data.gameData.teams.home.teamName,
-			teamHomeScore: homeScore,
 			teamAwayCity: data.gameData.teams.away.locationName,
 			teamAwayName: data.gameData.teams.away.teamName,
 			teamAwayScore: awayScore,
+			teamHomeCity: data.gameData.teams.home.locationName,
+			teamHomeName: data.gameData.teams.home.teamName,
+			teamHomeScore: homeScore,
 		}
 
-		console.log('nhl getGameDetail', gameDetail);
+		console.log('nhl getGameDetail results', results);
 
-		return (gameDetail);
+		return (results);
 	}
 
 	getGameState(linescoreData) {

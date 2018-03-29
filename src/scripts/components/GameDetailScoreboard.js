@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class GameDetailBoxScore extends Component {
+class GameDetailScoreboard extends Component {
 
 	getPeriodGoals(data) {
 		let goals = _.map(data, (goal) => {
@@ -17,8 +17,12 @@ class GameDetailBoxScore extends Component {
 	render() {
 		let data = this.props.gameDetail;
 
+		if (data.isPreview) {
+			return null;
+		}
+
 		return (
-			<header className="game-detail-boxscore">
+			<header className="game-detail-scoreboard">
 				<div className="col teams">
 					<span className="item">{data.gameState}</span>
 					<span className="item name">{data.teamAwayName}</span>
@@ -38,4 +42,4 @@ class GameDetailBoxScore extends Component {
 	}
 }
 
-export default GameDetailBoxScore;
+export default GameDetailScoreboard;

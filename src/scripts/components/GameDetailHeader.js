@@ -13,16 +13,28 @@ class GameDetailHeader extends Component {
 						<span className="name">{data.teamAwayName}</span>
 						<span className="record">{data.teamAwayRecord}</span>
 					</div>
-					<div className="team-score">{data.teamAwayScore}</div>
+					{
+						!data.isPreview &&
+						<div className="team-score">{data.teamAwayScore}</div>
+					}
 				</div>
-				<div className="col game-date">{data.date}</div>
+				<div className="col game-date">
+					<span className="game-date">{data.date}</span>
+					{
+						data.isPreview &&
+						<span className="game-time">{data.gameState}</span>
+					}
+				</div>
 				<div className="col team-home">
 					<div className="team-name">
 						<span className="city">{data.teamHomeCity}</span>
 						<span className="name">{data.teamHomeName}</span>
 						<span className="record">{data.teamHomeRecord}</span>
 					</div>
-					<div className="team-score">{data.teamHomeScore}</div>
+					{
+						!data.isPreview &&
+						<div className="team-score">{data.teamHomeScore}</div>
+					}
 				</div>
 			</header>
 		);
