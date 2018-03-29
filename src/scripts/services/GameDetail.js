@@ -32,24 +32,27 @@ class GameDetailService {
 		}
 
 		let results = {
-			// why does a nested object not work?
-			// home: {...},
-			// away: {...},
 			isPreview: isPreview,
 			date: curDate,
 			gameState: curState,
 			periodGoals: periods,
-			teamAwayCity: data.gameData.teams.away.locationName,
-			teamAwayName: data.gameData.teams.away.teamName,
-			teamAwayScore: awayScore,
-			teamHomeCity: data.gameData.teams.home.locationName,
-			teamHomeName: data.gameData.teams.home.teamName,
-			teamHomeScore: homeScore,
+			teams: {
+				away: {
+					city: data.gameData.teams.away.locationName,
+					name: data.gameData.teams.away.teamName,
+					score: awayScore,
+				},
+				home: {
+					city: data.gameData.teams.home.locationName,
+					name: data.gameData.teams.home.teamName,
+					score: homeScore,
+				}
+			}
 		}
 
 		console.log('GameDetailService results', results);
 
-		return (results);
+		return results;
 	}
 }
 

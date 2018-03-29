@@ -6,10 +6,11 @@
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
 import { connect } from 'react-redux';
-import * as gamesActions from '../store/game-detail/actions';
-import * as gamesSelectors from '../store/game-detail/reducer';
+import * as actions from '../store/game-detail/actions';
+import * as reducer from '../store/game-detail/reducer';
 import Header from '../components/GameDetailHeader';
 import Scoreboard from '../components/GameDetailScoreboard';
+import ScoreSummary from '../components/GameDetailScoreSummary';
 
 class GameDetail extends Component {
 
@@ -22,15 +23,15 @@ class GameDetail extends Component {
 		let path = this.props.location.pathname;
 		let gameId = path.match(/([^/]*)\/*$/)[1];
 
-		this.props.dispatch(gamesActions.fetchGameDetail(gameId));
+		this.props.dispatch(actions.fetchGameDetail(gameId));
 	}
 
 	render() {
-
 		return (
 			<div className="site-content container">
 				<Header gameDetail={this.props.gameDetail} />
 				<Scoreboard gameDetail={this.props.gameDetail} />
+				<ScoreSummary gameDetail={this.props.gameDetail} />
 			</div>
 		);
 	}
@@ -39,7 +40,7 @@ class GameDetail extends Component {
 // which props do we want to inject, given the global store state?
 // always use selectors here and avoid accessing the state directly
 function mapStateToProps(state) {
-	const gameDetail = gamesSelectors.getGameDetail(state);
+	const gameDetail = reducer.getGameDetail(state);
 	return {
 		gameDetail,
 	};

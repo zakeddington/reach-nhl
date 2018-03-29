@@ -1,44 +1,61 @@
 import React, { Component } from 'react';
+import Loader from './Loader';
 
 class GameDetailScoreboard extends Component {
 
 	getPeriodGoals(data) {
 		let goals = _.map(data, (goal) => {
-			return <span key={Math.random()} className="item goals">{goal}</span>
+			return (
+				<span key={Math.random()} className="item goals">{goal}</span>
+			)
 		})
 
-		return(
+		return (
 			<div className="period">
 				{goals}
 			</div>
 		)
 	}
 
-	render() {
-		let data = this.props.gameDetail;
+	renderLoading() {
+		return (
+			<Loader />
+		);
+	}
 
+	renderContent(data) {
 		if (data.isPreview) {
 			return null;
 		}
 
 		return (
-			<header className="game-detail-scoreboard">
+			<div className="game-detail-scoreboard">
 				<div className="col teams">
 					<span className="item">{data.gameState}</span>
-					<span className="item name">{data.teamAwayName}</span>
-					<span className="item name">{data.teamHomeName}</span>
+					<span className="item name">{data.teams.away.name}</span>
+					<span className="item name">{data.teams.home.name}</span>
 				</div>
 				{
 					_.map(data.periodGoals, (periods) => {
-						return(
+						return (
 							<div key={Math.random()} className="col periods">
 								{this.getPeriodGoals(periods)}
 							</div>
 						)
 					})
 				}
-			</header>
+			</div>
 		);
+	}
+
+	render() {
+		let data = this.props.gameDetail;
+
+		if (data.length || Object.keys(data).length) {
+			return this.renderContent(data);
+		}
+
+		return this.renderLoading();
 	}
 }
 

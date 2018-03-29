@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loader from './Loader';
 
 class ScheduleNav extends Component {
 
@@ -24,12 +25,18 @@ class ScheduleNav extends Component {
 		return navItem;
 	}
 
-	render() {
+	renderLoading() {
+		return (
+			<Loader />
+		);
+	}
+
+	renderContent(data) {
 		return (
 			<ul className="schedule-nav">
 				{
-					this.props.scheduleNav.map((month, i) => {
-						return(
+					data.map((month, i) => {
+						return (
 							<li key={month.name}>
 								{this.createNavItem(month)}
 							</li>
@@ -37,7 +44,17 @@ class ScheduleNav extends Component {
 					})
 				}
 			</ul>
-		);
+		)
+	}
+
+	render() {
+		let data = this.props.scheduleNav;
+
+		if (data.length || Object.keys(data).length) {
+			return this.renderContent(data);
+		}
+
+		return this.renderLoading();
 	}
 }
 

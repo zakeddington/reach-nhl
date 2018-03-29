@@ -11,7 +11,7 @@ import calendar from '../store/schedule/Calendar2017-2018';
 class ScheduleService {
 
 	async getScheduleNav() {
-		return (calendar);
+		return calendar;
 	}
 
 	async getScheduleGames(dateFrom, dateTo, params) {
@@ -45,12 +45,18 @@ class ScheduleService {
 				let gameDetail = {
 					id: game.gamePk,
 					gameState: curState,
-					teamAway: game.teams.away.team.name,
-					teamAwayScore: awayScore,
-					teamAwayRecord: `${game.teams.away.leagueRecord.wins}-${game.teams.away.leagueRecord.losses}-${game.teams.away.leagueRecord.ot}`,
-					teamHome: game.teams.home.team.name,
-					teamHomeScore: homeScore,
-					teamHomeRecord: `${game.teams.home.leagueRecord.wins}-${game.teams.home.leagueRecord.losses}-${game.teams.home.leagueRecord.ot}`,
+					teams: {
+						away: {
+							name: game.teams.away.team.name,
+							score: awayScore,
+							record: `${game.teams.away.leagueRecord.wins}-${game.teams.away.leagueRecord.losses}-${game.teams.away.leagueRecord.ot}`,
+						},
+						home: {
+							name: game.teams.home.team.name,
+							score: homeScore,
+							record: `${game.teams.home.leagueRecord.wins}-${game.teams.home.leagueRecord.losses}-${game.teams.home.leagueRecord.ot}`,
+						}
+					}
 				}
 
 				curResults.games.push(gameDetail);
@@ -65,7 +71,7 @@ class ScheduleService {
 			throw new Error(`ScheduleService getScheduleGames failed, dates not returned`);
 		}
 
-		return (results);
+		return results;
 	}
 }
 
