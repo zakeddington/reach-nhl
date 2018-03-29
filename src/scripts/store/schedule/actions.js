@@ -6,12 +6,12 @@
 //  plain object actions - when you just send a plain action to the reducer
 
 import * as types from './actionTypes';
-import nhlService from '../../services/nhl';
+import ScheduleService from '../../services/Schedule';
 
 export function fetchScheduleNav() {
 	return async(dispatch, getState) => {
 		try {
-			const scheduleNav = await nhlService.getScheduleNav();
+			const scheduleNav = await ScheduleService.getScheduleNav();
 			dispatch({ type: types.SCHEDULE_NAV_FETCHED, scheduleNav });
 		} catch (error) {
 			console.error(error);
@@ -25,7 +25,7 @@ export function fetchScheduleGames(dateFrom, dateTo) {
 			const params = [
 				'schedule.linescore'
 			];
-			const scheduleGames = await nhlService.getScheduleGames(dateFrom, dateTo, params);
+			const scheduleGames = await ScheduleService.getScheduleGames(dateFrom, dateTo, params);
 			dispatch({ type: types.SCHEDULE_GAMES_FETCHED, scheduleGames });
 		} catch (error) {
 			console.error(error);

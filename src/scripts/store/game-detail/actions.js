@@ -6,12 +6,12 @@
 //  plain object actions - when you just send a plain action to the reducer
 
 import * as types from './actionTypes';
-import nhlService from '../../services/nhl';
+import GameDetailService from '../../services/GameDetail';
 
 export function fetchGameDetail(gameId) {
 	return async(dispatch, getState) => {
 		try {
-			const gameDetail = await nhlService.getGameDetail(gameId);
+			const gameDetail = await GameDetailService.getGameDetail(gameId);
 
 			console.log('actions fetchGameDetail', gameDetail);
 
