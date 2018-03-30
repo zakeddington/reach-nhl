@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from './Loader';
+import Logo from './Logo';
 
 class GameDetailHeader extends Component {
 
@@ -13,6 +14,7 @@ class GameDetailHeader extends Component {
 		return (
 			<header className="game-detail-header">
 				<div className="col team-away">
+					<Logo teamId={data.teams.away.id} />
 					<div className="team-name">
 						<span className="city">{data.teams.away.city}</span>
 						<span className="name">{data.teams.away.name}</span>
@@ -31,15 +33,16 @@ class GameDetailHeader extends Component {
 					}
 				</div>
 				<div className="col team-home">
+					{
+						!data.isPreview &&
+						<div className="team-score">{data.teams.home.score}</div>
+					}
 					<div className="team-name">
 						<span className="city">{data.teams.home.city}</span>
 						<span className="name">{data.teams.home.name}</span>
 						<span className="record">{data.teams.home.record}</span>
 					</div>
-					{
-						!data.isPreview &&
-						<div className="team-score">{data.teams.home.score}</div>
-					}
+					<Logo teamId={data.teams.home.id} />
 				</div>
 			</header>
 		);

@@ -47,11 +47,13 @@ class ScheduleService {
 					gameState: curState,
 					teams: {
 						away: {
+							id: game.teams.away.team.id,
 							name: game.teams.away.team.name,
 							score: awayScore,
 							record: `${game.teams.away.leagueRecord.wins}-${game.teams.away.leagueRecord.losses}-${game.teams.away.leagueRecord.ot}`,
 						},
 						home: {
+							id: game.teams.home.team.id,
 							name: game.teams.home.team.name,
 							score: homeScore,
 							record: `${game.teams.home.leagueRecord.wins}-${game.teams.home.leagueRecord.losses}-${game.teams.home.leagueRecord.ot}`,

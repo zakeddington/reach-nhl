@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Loader extends Component {
 
-render() {
+	render() {
 		return (
 			<div className="loader">
 				<div className="loader-circle bounce1"></div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from './Loader';
+import Logo from './Logo';
 
 class ScheduleResults extends Component {
 
@@ -29,12 +30,14 @@ class ScheduleResults extends Component {
 							<a href={`/game/${game.id}`}>
 								<div className="game-state">{game.gameState}</div>
 								<div className="team-row team-away">
+									<Logo teamId={game.teams.away.id} />
 									<span className="team-name">{game.teams.away.name}
 										<span className="team-record">({game.teams.away.record})</span>
 									</span>
 									<span className="team-score">{game.teams.away.score}</span>
 								</div>
 								<div className="team-row team-home">
+									<Logo teamId={game.teams.home.id} />
 									<span className="team-name">{game.teams.home.name}
 										<span className="team-record">({game.teams.home.record})</span>
 									</span>

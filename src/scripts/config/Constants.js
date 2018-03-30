@@ -4,6 +4,16 @@
  */
 
 const Constants = {
+	imgUrl: {
+		logoTeams: {
+			base: '/assets/images/logo-teams.svg#team-',
+		},
+		player: {
+			base: '//nhl.bamcontent.com/images/headshots/current/60x60/',
+			ext: '@2x.jpg',
+		}
+	},
+
 	lang: 'en-US',
 
 	dateOptions: {

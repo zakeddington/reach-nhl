@@ -38,11 +38,13 @@ class GameDetailService {
 			periodGoals: periods,
 			teams: {
 				away: {
+					id: data.gameData.teams.away.id,
 					city: data.gameData.teams.away.locationName,
 					name: data.gameData.teams.away.teamName,
 					score: awayScore,
 				},
 				home: {
+					id: data.gameData.teams.home.id,
 					city: data.gameData.teams.home.locationName,
 					name: data.gameData.teams.home.teamName,
 					score: homeScore,
@@ -60,6 +62,8 @@ class GameDetailService {
 		const periods = _.get(data, 'liveData.linescore.periods');
 		const playIds = _.get(data, 'liveData.plays.scoringPlays');
 		const allPlays = _.get(data, 'liveData.plays.allPlays');
+		const teamAwayId = data.gameData.teams.away.id;
+		const teamHomeId = data.gameData.teams.home.id;
 
 		let periodGoals = [];
 
@@ -73,6 +77,7 @@ class GameDetailService {
 		_.forEach(playIds, (id) => {
 			let curPlay = allPlays[id];
 			let curPeriodIndex = curPlay.about.period - 1;
+			let scoringTeamId = curPlay.team.id;
 			let curScorer;
 			let curAssists = [];
 
@@ -81,6 +86,8 @@ class GameDetailService {
 					curScorer = {
 						name: player.player.fullName,
 						total: player.seasonTotal,
+						desc: curPlay.result.secondaryType,
+						photo: `${CONSTANTS.imgUrl.player.base}${player.player.id}${CONSTANTS.imgUrl.player.ext}`,
 					}
 				}
 
@@ -93,17 +100,20 @@ class GameDetailService {
 			});
 
 			let playDetail = {
-				time: curPlay.about.periodTime,
+				time: `${curPlay.about.periodTime} / ${periodGoals[curPeriodIndex].periodName}`,
 				isEmptyNet: curPlay.result.emptyNet,
 				teamStrength: curPlay.result.strength.code,
+				teamId: scoringTeamId,
 				score: {
 					away: {
 						name: data.gameData.teams.away.triCode,
 						goals: curPlay.about.goals.away,
+						isScoringTeam: scoringTeamId === teamAwayId,
 					},
 					home: {
 						name: data.gameData.teams.home.triCode,
 						goals: curPlay.about.goals.home,
+						isScoringTeam: scoringTeamId === teamHomeId,
 					}
 				},
 				scorer: curScorer,
