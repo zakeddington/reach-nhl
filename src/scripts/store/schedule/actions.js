@@ -6,7 +6,7 @@
 //  plain object actions - when you just send a plain action to the reducer
 
 import * as types from './actionTypes';
-import ScheduleService from '../../services/Schedule';
+import ScheduleService from '../../services/ScheduleService';
 
 export function fetchScheduleNav() {
 	return async(dispatch, getState) => {
