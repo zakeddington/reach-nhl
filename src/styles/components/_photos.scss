@@ -1,0 +1,15 @@
+
+// Player photos
+// -----------------------------------------------------------------+
+
+.photo {
+	border: 1px solid $color-grey-med;
+	border-radius: 50%;
+	display: block;
+	margin-right: 1em;
+	overflow: hidden;
+
+	img {
+		display: block;
+	}
+}

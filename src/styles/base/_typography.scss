@@ -93,6 +93,15 @@ h4 {
 	font-size: 1.1em;
 }
 
+.header-title {
+	background: $color-grey-dark;
+	color: $color-white;
+	font-size: 1em;
+	margin-bottom: 0;
+	padding: 0.5em 1em;
+	width: 100%;
+}
+
 hr {
 	border-top: 2px solid $color-grey;
 	margin: 1.5em 0;

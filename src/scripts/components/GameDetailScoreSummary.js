@@ -49,9 +49,7 @@ class GameDetailScoreSummary extends Component {
 
 			return (
 				<div key={period.periodName} className="score-summary-period">
-					<div className="score-summary-header">
-						<h3>{period.periodName} Period</h3>
-					</div>
+					<h3 className="header-title">{period.periodName} Period</h3>
 					{goals}
 				</div>
 			)

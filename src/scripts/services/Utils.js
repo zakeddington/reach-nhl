@@ -1,4 +1,6 @@
 
+import CONSTANTS from '../config/Constants';
+
 const Utils = {
 
 	getGameState(linescoreData) {
@@ -57,6 +59,56 @@ const Utils = {
 		}
 
 		return periods;
+	},
+
+	getStarStats(star, boxscoreTeams) {
+		let stats;
+		let starId = star.id;
+		let starName = star.fullName;
+		let playerKey = `ID${starId}`;
+		let teamName;
+		let teamId;
+		let position;
+		let stat1;
+		let stat2;
+
+		let playerData = _.get(boxscoreTeams.away.players, playerKey);
+
+		if (playerData) {
+			teamName = boxscoreTeams.away.team.triCode;
+			teamId = boxscoreTeams.away.team.id;
+		} else {
+			playerData = _.get(boxscoreTeams.home.players, playerKey);
+			teamName = boxscoreTeams.home.team.triCode;
+			teamId = boxscoreTeams.home.team.id;
+		}
+
+		position = playerData.position.code;
+
+		if (position === 'G') {
+			let savePercent = playerData.stats.goalieStats.savePercentage;
+
+			savePercent = (savePercent / 100).toFixed(3);
+
+			stat1 = `Saves: ${playerData.stats.goalieStats.saves}`;
+			stat2 = `Save %: ${savePercent}`;
+		} else {
+			stat1 = `Goals: ${playerData.stats.skaterStats.goals}`;
+			stat2 = `Assists: ${playerData.stats.skaterStats.assists}`;
+		}
+
+
+		stats = {
+			id: starId,
+			name: starName,
+			photo: `${CONSTANTS.imgUrl.player.base}${starId}${CONSTANTS.imgUrl.player.ext}`,
+			stat1: stat1,
+			stat2: stat2,
+			teamName: teamName,
+			teamId: teamId,
+		}
+
+		return stats;
 	}
 }
 

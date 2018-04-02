@@ -13,6 +13,7 @@ class GameDetailService {
 		const data = await API.getGame(gameId);
 		const periodGoals = _.get(data, 'liveData.linescore.periods');
 		const shootoutGoals = _.get(data, 'liveData.linescore.shootoutInfo');
+		const boxscoreTeams = _.get(data, 'liveData.boxscore.teams');
 
 		let date = new Date(data.gameData.datetime.dateTime);
 		let curDate = date.toLocaleDateString(CONSTANTS.lang, CONSTANTS.dateOptions);
@@ -21,6 +22,9 @@ class GameDetailService {
 		let homeScore = data.liveData.linescore.teams.home.goals;
 		let periods = UTILS.getPeriodStats(periodGoals, awayScore, homeScore, shootoutGoals);
 		let gameState = UTILS.getGameState(data.liveData.linescore);
+		let firstStar = UTILS.getStarStats(data.liveData.decisions.firstStar, boxscoreTeams);
+		let secondStar = UTILS.getStarStats(data.liveData.decisions.secondStar, boxscoreTeams);
+		let thirdStar = UTILS.getStarStats(data.liveData.decisions.thirdStar, boxscoreTeams);
 		let curState;
 		let isPreview = true;
 
@@ -49,7 +53,8 @@ class GameDetailService {
 					name: data.gameData.teams.home.teamName,
 					score: homeScore,
 				}
-			}
+			},
+			stars: [firstStar, secondStar, thirdStar]
 		}
 
 		// console.log('GameDetailService results', results);
@@ -114,7 +119,7 @@ class GameDetailService {
 						name: data.gameData.teams.home.triCode,
 						goals: curPlay.about.goals.home,
 						isScoringTeam: scoringTeamId === teamHomeId,
-					}
+					},
 				},
 				scorer: curScorer,
 				assists: curAssists
