@@ -86,46 +86,48 @@ class GameDetailService {
 			let curScorer;
 			let curAssists = [];
 
-			_.forEach(curPlay.players, (player) => {
-				if (player.playerType === "Scorer") {
-					curScorer = {
-						name: player.player.fullName,
-						total: player.seasonTotal,
-						desc: curPlay.result.secondaryType,
-						photo: `${CONSTANTS.imgUrl.player.base}${player.player.id}${CONSTANTS.imgUrl.player.ext}`,
+			if (curPeriodIndex < periods.length) {
+				_.forEach(curPlay.players, (player) => {
+					if (player.playerType === "Scorer") {
+						curScorer = {
+							name: player.player.fullName,
+							total: player.seasonTotal,
+							desc: curPlay.result.secondaryType,
+							photo: `${CONSTANTS.imgUrl.player.base}${player.player.id}${CONSTANTS.imgUrl.player.ext}`,
+						}
 					}
+
+					if (player.playerType === "Assist") {
+						curAssists.push({
+							name: player.player.fullName,
+							total: player.seasonTotal,
+						})
+					}
+				});
+
+				let playDetail = {
+					time: `${curPlay.about.periodTime} / ${periodGoals[curPeriodIndex].periodName}`,
+					isEmptyNet: curPlay.result.emptyNet,
+					teamStrength: curPlay.result.strength.code,
+					teamId: scoringTeamId,
+					score: {
+						away: {
+							name: data.gameData.teams.away.triCode,
+							goals: curPlay.about.goals.away,
+							isScoringTeam: scoringTeamId === teamAwayId,
+						},
+						home: {
+							name: data.gameData.teams.home.triCode,
+							goals: curPlay.about.goals.home,
+							isScoringTeam: scoringTeamId === teamHomeId,
+						},
+					},
+					scorer: curScorer,
+					assists: curAssists
 				}
 
-				if (player.playerType === "Assist") {
-					curAssists.push({
-						name: player.player.fullName,
-						total: player.seasonTotal,
-					})
-				}
-			});
-
-			let playDetail = {
-				time: `${curPlay.about.periodTime} / ${periodGoals[curPeriodIndex].periodName}`,
-				isEmptyNet: curPlay.result.emptyNet,
-				teamStrength: curPlay.result.strength.code,
-				teamId: scoringTeamId,
-				score: {
-					away: {
-						name: data.gameData.teams.away.triCode,
-						goals: curPlay.about.goals.away,
-						isScoringTeam: scoringTeamId === teamAwayId,
-					},
-					home: {
-						name: data.gameData.teams.home.triCode,
-						goals: curPlay.about.goals.home,
-						isScoringTeam: scoringTeamId === teamHomeId,
-					},
-				},
-				scorer: curScorer,
-				assists: curAssists
+				periodGoals[curPeriodIndex].goals.push(playDetail);
 			}
-
-			periodGoals[curPeriodIndex].goals.push(playDetail);
 		});
 
 		return periodGoals;
