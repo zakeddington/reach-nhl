@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from '../Loader';
+import PlayerPhoto from '../PlayerPhoto';
 
 class Stars extends Component {
 
@@ -17,9 +18,7 @@ class Stars extends Component {
 		let stars = _.map(data.stars, (star) => {
 			return (
 				<div key={Math.random()} className="stars-player">
-					<span className="photo stars-photo">
-						<img src={star.photo} alt={star.name} />
-					</span>
+					<PlayerPhoto photoUrl={star.photo} />
 					<span className="stars-name">
 						{star.name}
 						<span className="stars-team-name">{star.teamName}</span>

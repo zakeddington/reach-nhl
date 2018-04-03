@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Logo from '../Logo';
+import PlayerPhoto from '../PlayerPhoto';
 
 class PeriodSummary extends Component {
 
@@ -13,9 +14,7 @@ class PeriodSummary extends Component {
 						</div>
 						<div className="period-summary-time">{goal.time}</div>
 						<div className="period-summary-photo">
-							<div className="photo">
-								<img src={goal.scorer.photo} alt={goal.scorer.name} />
-							</div>
+							<PlayerPhoto photoUrl={goal.scorer.photo} />
 						</div>
 						<div className="period-summary-player-info">
 							<span className="period-summary-player">
@@ -63,17 +62,15 @@ class PeriodSummary extends Component {
 					</div>;
 			}
 
-			let penalties = period.penalties.map((penalty) => {
+			let penalties = period.penalties.map((penalty, i) => {
 				return (
-					<div key={penalty.time} className="period-summary-item">
+					<div key={`${penalty.time}-${i}`} className="period-summary-item">
 						<div className="period-summary-logo">
 							<Logo teamId={penalty.teamId} />
 						</div>
 						<div className="period-summary-time">{penalty.time}</div>
 						<div className="period-summary-photo">
-							<div className="photo">
-								<img src={penalty.penaltyOn.photo} alt={penalty.penaltyOn.name} />
-							</div>
+							<PlayerPhoto photoUrl={penalty.penaltyOn.photo} />
 						</div>
 						<div className="period-summary-player-info">
 							<span className="period-summary-player">

@@ -35,7 +35,6 @@ class GameDetailService {
 		}
 
 		if (Object.keys(stars).length) {
-			console.log(Object.keys(stars).length);
 			let firstStar = UTILS.getStarStats(stars.firstStar, boxscoreTeams);
 			let secondStar = UTILS.getStarStats(stars.secondStar, boxscoreTeams);
 			let thirdStar = UTILS.getStarStats(stars.thirdStar, boxscoreTeams);
