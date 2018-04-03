@@ -78,15 +78,26 @@
 
 	.period-summary-player {
 		display: block;
-		font-weight: 700;
 
 		.period-summary-name {
+			font-weight: 700;
+		}
+
+		span {
 			margin-right: 0.5em;
 		}
 
-		.period-summary-desc {
+		.period-summary-goal-desc {
 			font-size: 0.8em;
-			font-weight: normal;
+		}
+
+		.period-summary-goal-type {
+			background: $color-grey-dark;
+			border-radius: 3px;
+			color: $color-white;
+			font-size: 0.8em;
+			font-weight: 600;
+			padding: 0 0.4em;
 		}
 	}
 
@@ -102,8 +113,10 @@
 
 	.period-summary-score {
 		border: 1px solid;
+		border-radius: 3px;
 		display: flex;
 		font-size: 0.9em;
+		font-weight: 600;
 		white-space: nowrap;
 
 		span {

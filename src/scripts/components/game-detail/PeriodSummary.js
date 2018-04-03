@@ -20,7 +20,19 @@ class PeriodSummary extends Component {
 						<div className="period-summary-player-info">
 							<span className="period-summary-player">
 								<span className="period-summary-name">{goal.scorer.name} ({goal.scorer.total}),</span>
-								<span className="period-summary-desc">{goal.scorer.desc}</span>
+								<span className="period-summary-goal-desc">
+								{goal.scorer.desc}
+								{
+									goal.isEmptyNet &&
+									" (Empty Net)"
+								}
+								</span>
+								{
+									goal.goalType !== 'EVEN' &&
+									<span className="period-summary-goal-type">
+										{goal.goalType}
+									</span>
+								}
 							</span>
 							<span className="period-summary-details">
 								{

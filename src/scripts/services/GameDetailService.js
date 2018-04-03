@@ -118,7 +118,7 @@ class GameDetailService {
 				let playDetail = {
 					time: curPlay.about.periodTime,
 					isEmptyNet: curPlay.result.emptyNet,
-					teamStrength: curPlay.result.strength.code,
+					goalType: curPlay.result.strength.code,
 					teamId: scoringTeamId,
 					score: {
 						away: {
