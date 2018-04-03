@@ -11,7 +11,7 @@ import * as reducer from '../store/game-detail/reducer';
 import GameHeader from '../components/game-detail/GameHeader';
 import Scoreboard from '../components/game-detail/Scoreboard';
 import Stars from '../components/game-detail/Stars';
-import ScoringSummary from '../components/game-detail/ScoringSummary';
+import PeriodSummary from '../components/game-detail/PeriodSummary';
 
 class GameDetail extends Component {
 
@@ -25,7 +25,7 @@ class GameDetail extends Component {
 		let gameId = path.match(/([^/]*)\/*$/)[1];
 
 		this.props.dispatch(actions.fetchGameDetail(gameId));
-		this.props.dispatch(actions.fetchScoringSummary(gameId));
+		this.props.dispatch(actions.fetchPeriodSummary(gameId));
 	}
 
 	render() {
@@ -36,7 +36,7 @@ class GameDetail extends Component {
 					<Stars gameDetail={this.props.gameDetail} />
 					<Scoreboard gameDetail={this.props.gameDetail} />
 				</div>
-				<ScoringSummary scoringSummary={this.props.scoringSummary} />
+				<PeriodSummary periodSummary={this.props.periodSummary} />
 			</div>
 		);
 	}
@@ -46,10 +46,10 @@ class GameDetail extends Component {
 // always use selectors here and avoid accessing the state directly
 function mapStateToProps(state) {
 	const gameDetail = reducer.getGameDetail(state);
-	const scoringSummary = reducer.getScoringSummary(state);
+	const periodSummary = reducer.getPeriodSummary(state);
 	return {
 		gameDetail,
-		scoringSummary,
+		periodSummary,
 	};
 }
 

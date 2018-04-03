@@ -1,0 +1,114 @@
+
+// Goals/Penalties by period
+// -----------------------------------------------------------------+
+
+.period-summary {
+	color: $color-grey-dark;
+	margin: 2em auto;
+	width: 100%;
+}
+
+.period-summary-period {
+	background: $color-white;
+	margin-bottom: 2em;
+
+	&:last-child {
+		border-bottom: 1px solid $color-grey-med;
+	}
+}
+
+.period-summary-item {
+	align-items: center;
+	border-bottom: 1px solid $color-grey-med;
+	display: flex;
+	flex-direction: row;
+	font-size: 1.2em;
+	padding: 1em 2em;
+
+	&:last-child {
+		border-bottom: none;
+	}
+
+	> div {
+		padding-left: 0.5em;
+		padding-right: 0.5em;
+	}
+}
+
+.period-summary-title {
+	background: $color-grey;
+	color: $color-white;
+	font-size: 1em;
+	margin: 0;
+	padding: 0.5em 1em;
+	width: 100%;
+}
+
+.period-summary-subtitle {
+	background: $color-grey-light;
+	color: $color-grey-dark;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 0;
+	padding: 0.5em 1em;
+	text-transform: uppercase;
+}
+
+.period-summary-empty {
+	padding: 1em 0;
+}
+
+.period-summary-logo {
+	height: 60px;
+	width: 60px;
+}
+
+.period-summary-time {
+	// padding: 0 2em;
+	text-align: center;
+	width: 10%;
+}
+
+.period-summary-photo {
+	// padding: 0 1em;
+}
+
+.period-summary-player-info {
+	flex: 5;
+
+	.period-summary-player {
+		display: block;
+		font-weight: 700;
+
+		.period-summary-name {
+			margin-right: 0.5em;
+		}
+
+		.period-summary-desc {
+			font-size: 0.8em;
+			font-weight: normal;
+		}
+	}
+
+	.period-summary-details {
+		display: block;
+		font-size: 0.8em;
+	}
+}
+
+.period-summary-game-info {
+	flex: 1;
+	text-align: center;
+
+	.period-summary-score {
+		border: 1px solid;
+		display: flex;
+		font-size: 0.9em;
+		white-space: nowrap;
+
+		span {
+			padding: 0 5px;
+			width: 50%;
+		}
+	}
+}

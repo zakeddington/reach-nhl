@@ -70,24 +70,26 @@ class GameDetailService {
 		return results;
 	}
 
-	async getScoringSummary(gameId) {
+	async getPeriodSummary(gameId) {
 		const data = await API.getGame(gameId);
 		const periods = _.get(data, 'liveData.linescore.periods');
-		const playIds = _.get(data, 'liveData.plays.scoringPlays');
+		const scoringIds = _.get(data, 'liveData.plays.scoringPlays');
+		const penaltyIds = _.get(data, 'liveData.plays.penaltyPlays');
 		const allPlays = _.get(data, 'liveData.plays.allPlays');
 		const teamAwayId = data.gameData.teams.away.id;
 		const teamHomeId = data.gameData.teams.home.id;
 
-		let periodGoals = [];
+		let periodPlays = [];
 
 		_.forEach(periods, (period) => {
-			periodGoals.push({
+			periodPlays.push({
 				periodName: period.ordinalNum,
-				goals: []
+				goals: [],
+				penalties: [],
 			});
 		});
 
-		_.forEach(playIds, (id) => {
+		_.forEach(scoringIds, (id) => {
 			let curPlay = allPlays[id];
 			let curPeriodIndex = curPlay.about.period - 1;
 			let scoringTeamId = curPlay.team.id;
@@ -114,7 +116,7 @@ class GameDetailService {
 				});
 
 				let playDetail = {
-					time: `${curPlay.about.periodTime} / ${periodGoals[curPeriodIndex].periodName}`,
+					time: curPlay.about.periodTime,
 					isEmptyNet: curPlay.result.emptyNet,
 					teamStrength: curPlay.result.strength.code,
 					teamId: scoringTeamId,
@@ -134,11 +136,39 @@ class GameDetailService {
 					assists: curAssists
 				}
 
-				periodGoals[curPeriodIndex].goals.push(playDetail);
+				periodPlays[curPeriodIndex].goals.push(playDetail);
 			}
 		});
 
-		return periodGoals;
+		_.forEach(penaltyIds, (id) => {
+			let curPlay = allPlays[id];
+			let curPeriodIndex = curPlay.about.period - 1;
+			let penaltyTeamId = curPlay.team.id;
+			let curPenaltyOn;
+
+			if (curPeriodIndex < periods.length) {
+				_.forEach(curPlay.players, (player) => {
+					if (player.playerType === "PenaltyOn") {
+						curPenaltyOn = {
+							name: player.player.fullName,
+							photo: `${CONSTANTS.imgUrl.player.base}${player.player.id}${CONSTANTS.imgUrl.player.ext}`,
+						}
+					}
+				});
+
+				let playDetail = {
+					time: curPlay.about.periodTime,
+					teamId: penaltyTeamId,
+					penaltyOn: curPenaltyOn,
+					penaltyType: curPlay.result.secondaryType,
+					penaltyMin: curPlay.result.penaltyMinutes,
+				}
+
+				periodPlays[curPeriodIndex].penalties.push(playDetail);
+			}
+		});
+
+		return periodPlays;
 	}
 }
 

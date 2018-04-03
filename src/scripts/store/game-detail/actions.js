@@ -22,14 +22,14 @@ export function fetchGameDetail(gameId) {
 	};
 }
 
-export function fetchScoringSummary(gameId) {
+export function fetchPeriodSummary(gameId) {
 	return async(dispatch, getState) => {
 		try {
-			const scoringSummary = await GameDetailService.getScoringSummary(gameId);
+			const periodSummary = await GameDetailService.getPeriodSummary(gameId);
 
-			console.log('actions fetchScoringSummary', scoringSummary);
+			console.log('actions fetchPeriodSummary', periodSummary);
 
-			dispatch({ type: types.SCORING_SUMMARY_FETCHED, scoringSummary });
+			dispatch({ type: types.PERIOD_SUMMARY_FETCHED, periodSummary });
 		} catch (error) {
 			console.error(error);
 		}

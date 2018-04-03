@@ -6,14 +6,24 @@
 	border: 1px solid $color-grey-med;
 	border-radius: 50%;
 	display: block;
-	height: 7vw;
+	height: 6vw;
 	margin: auto;
-	min-height: 80px;
-	min-width: 80px;
+	max-height: 120px;
+	max-width: 120px;
+	min-height: 60px;
+	min-width: 60px;
 	overflow: hidden;
-	width: 7vw;
+	width: 6vw;
 
 	img {
 		display: block;
 	}
+}
+
+// Team logos
+// -----------------------------------------------------------------+
+
+.team-logo {
+	max-height: 100%;
+	max-width: 100%;
 }

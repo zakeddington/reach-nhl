@@ -14,10 +14,12 @@
 		color: $color-grey;
 		padding: 0.5em 1em;
 		text-decoration: none;
+		transition: all $anim-speed $anim-ease;
 
 		&:hover,
 		&:focus {
 			background: $color-white;
+			box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
 		}
 	}
 
