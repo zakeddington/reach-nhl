@@ -1,0 +1,45 @@
+
+// Stars of the Game
+// -----------------------------------------------------------------+
+
+.stars {
+	background: $color-white;
+	border-bottom: 1px solid $color-grey-med;
+	display: flex;
+	flex-direction: column;
+	margin-right: 2em;
+	width: calc(60% - 2em);
+}
+
+.stars-container {
+	display: flex;
+	flex-direction: row;
+	padding: 1em;
+	width: 100%;
+}
+
+.stars-player {
+	align-items: center;
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	text-align: center;
+
+	.stars-photo {
+		margin: 0;
+	}
+
+	.stars-name {
+		font-weight: 700;
+		width: 100%;
+
+		.stars-team-name {
+			font-weight: normal;
+			padding-left: 0.5em;
+		}
+	}
+
+	.stars-stat {
+		font-size: 0.8em;
+	}
+}

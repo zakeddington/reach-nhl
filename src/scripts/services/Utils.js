@@ -3,7 +3,7 @@ import CONSTANTS from '../config/Constants';
 
 const Utils = {
 
-	getGameState(linescoreData) {
+	getGameStatus(linescoreData) {
 		let data = linescoreData;
 		let curPeriod = data.currentPeriod;
 		let curPeriodName = data.currentPeriodOrdinal;

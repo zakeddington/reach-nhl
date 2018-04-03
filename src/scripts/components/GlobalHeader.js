@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Header extends Component {
+class GlobalHeader extends Component {
 	render() {
 		return (
 			<header className="site-header">
@@ -12,4 +12,4 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+export default GlobalHeader;

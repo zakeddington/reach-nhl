@@ -12,10 +12,17 @@
 @import 'base/grid';
 @import 'base/layout';
 
-@import 'views/header';
-@import 'views/schedule';
-@import 'views/game-detail';
-
 @import 'components/loader';
 @import 'components/photos';
+
+@import 'components/global/header';
+
+@import 'components/schedule/nav';
+@import 'components/schedule/results';
+
+@import 'components/game-detail/game-header';
+@import 'components/game-detail/scoreboard';
+@import 'components/game-detail/stars';
+@import 'components/game-detail/scoring-summary';
+
 @import 'components/team-branding';

@@ -29,22 +29,22 @@ class ScheduleService {
 
 			_.flatMapDeep(date.games, (game) => {
 				let startTime = new Date(game.gameDate).toLocaleTimeString(CONSTANTS.lang, CONSTANTS.timeOptions);
-				let gameState = UTILS.getGameState(game.linescore);
-				let curState;
+				let gameStatus = UTILS.getGameStatus(game.linescore);
+				let curStatus;
 				let awayScore = '';
 				let homeScore = '';
 
-				if (gameState.length) {
-					curState = gameState;
+				if (gameStatus.length) {
+					curStatus = gameStatus;
 					awayScore = game.teams.away.score;
 					homeScore = game.teams.home.score;
 				} else {
-					curState = startTime;
+					curStatus = startTime;
 				}
 
 				let gameDetail = {
 					id: game.gamePk,
-					gameState: curState,
+					gameStatus: curStatus,
 					teams: {
 						away: {
 							id: game.teams.away.team.id,

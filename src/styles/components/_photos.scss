@@ -6,8 +6,12 @@
 	border: 1px solid $color-grey-med;
 	border-radius: 50%;
 	display: block;
-	margin-right: 1em;
+	height: 7vw;
+	margin: auto;
+	min-height: 80px;
+	min-width: 80px;
 	overflow: hidden;
+	width: 7vw;
 
 	img {
 		display: block;

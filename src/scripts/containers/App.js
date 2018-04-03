@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../components/GlobalHeader';
 import Schedule from './Schedule';
 import GameDetail from './GameDetail';
 
@@ -17,7 +16,6 @@ class App extends Component {
 					<Route path="/game/:id" component={GameDetail} />
 					<Redirect to="/" />
 				</Switch>
-				<Footer/>
 			</div>
 		);
 	}

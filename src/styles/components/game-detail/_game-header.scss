@@ -1,0 +1,72 @@
+
+// Game Detail Header
+// -----------------------------------------------------------------+
+
+.game-header {
+	align-items: center;
+	background: $color-white;
+	border-bottom: 1px solid $color-grey-med;
+	display: flex;
+	padding: 2em 0;
+	text-align: center;
+
+	.col {
+		align-items: center;
+		display: flex;
+		flex: 2;
+		flex-basis: calc(33.3% - 1em);
+		flex-direction: row;
+		line-height: 2;
+
+		&.away {
+			color: $color-grey-dark;
+			justify-content: flex-end;
+			text-align: right;
+		}
+
+		&.home {
+			color: $color-grey-dark;
+			justify-content: flex-start;
+			text-align: left;
+		}
+
+		&.game-header-date-info {
+			flex: 1;
+			flex-direction: column;
+			justify-content: center;
+			line-height: 1.5;
+			padding: 0 3em;
+			white-space: nowrap;
+
+			.game-header-time {
+				font-weight: bold;
+			}
+		}
+	}
+
+	.game-header-team-info {
+		display: flex;
+		flex-direction: column;
+		line-height: 1;
+		padding: 0 2em;
+
+		.game-header-city {
+			text-transform: uppercase;
+		}
+
+		.game-header-name {
+			font-size: 2em;
+			font-weight: bold;
+		}
+	}
+
+	.game-header-score {
+		font-size: 3em;
+		line-height: 1;
+	}
+
+	.team-logo {
+		height: 6em;
+		width: 6em;
+	}
+}

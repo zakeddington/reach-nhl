@@ -1,0 +1,88 @@
+
+// Scoring Overview
+// -----------------------------------------------------------------+
+
+.scoring-summary {
+	color: $color-grey-dark;
+	margin: 2em auto;
+	width: 100%;
+}
+
+.scoring-summary-period {
+	background: $color-white;
+
+	&:last-child {
+		border-bottom: 1px solid $color-grey-med;
+	}
+}
+
+.scoring-summary-results {
+	align-items: center;
+	border-bottom: 1px solid $color-grey-med;
+	display: flex;
+	flex-direction: row;
+	padding: 1em 2em;
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.scoring-summary-title {
+	background: $color-grey-med-dark;
+	color: $color-white;
+	font-size: 1em;
+	margin: 0;
+	padding: 0.5em 1em;
+	width: 100%;
+}
+
+.scoring-summary-photo {
+	padding-right: 2em;
+}
+
+.scoring-summary-players {
+	flex: 5;
+
+	.scoring-summary-scorer {
+		display: block;
+		font-weight: 700;
+
+		.scoring-summary-name {
+			margin-right: 0.5em;
+		}
+
+		.scoring-summary-desc {
+			font-size: 0.8em;
+			font-weight: normal;
+		}
+	}
+
+	.scoring-summary-assists {
+		display: block;
+		font-size: 0.8em;
+	}
+}
+
+.scoring-summary-game {
+	flex: 1;
+	text-align: center;
+
+	.scoring-summary-score {
+		border: 1px solid;
+		display: flex;
+		font-size: 0.9em;
+		white-space: nowrap;
+
+		span {
+			padding: 0 5px;
+			width: 50%;
+		}
+	}
+
+	.scoring-summary-time {
+		display: block;
+		font-size: 0.8em;
+		text-align: center;
+	}
+}

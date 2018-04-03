@@ -8,9 +8,10 @@ import autoBind from 'react-autobind';
 import { connect } from 'react-redux';
 import * as actions from '../store/game-detail/actions';
 import * as reducer from '../store/game-detail/reducer';
-import Header from '../components/GameDetailHeader';
-import Scoreboard from '../components/GameDetailScoreboard';
-import ScoreSummary from '../components/GameDetailScoreSummary';
+import GameHeader from '../components/game-detail/GameHeader';
+import Scoreboard from '../components/game-detail/Scoreboard';
+import Stars from '../components/game-detail/Stars';
+import ScoringSummary from '../components/game-detail/ScoringSummary';
 
 class GameDetail extends Component {
 
@@ -30,9 +31,12 @@ class GameDetail extends Component {
 	render() {
 		return (
 			<div className="site-content container">
-				<Header gameDetail={this.props.gameDetail} />
-				<Scoreboard gameDetail={this.props.gameDetail} />
-				<ScoreSummary scoringSummary={this.props.scoringSummary} />
+				<GameHeader gameDetail={this.props.gameDetail} />
+				<div className="scoreboard-stars">
+					<Stars gameDetail={this.props.gameDetail} />
+					<Scoreboard gameDetail={this.props.gameDetail} />
+				</div>
+				<ScoringSummary scoringSummary={this.props.scoringSummary} />
 			</div>
 		);
 	}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Loader from './Loader';
-import Logo from './Logo';
+import Loader from '../Loader';
+import Logo from '../Logo';
 
 class ScheduleResults extends Component {
 
@@ -15,33 +15,33 @@ class ScheduleResults extends Component {
 			let games = date.games.map((game, i) => {
 					let classGameStatus = '';
 
-					if (game.gameState.includes("Final")) {
+					if (game.gameStatus.includes("Final")) {
 						if (game.teams.home.score > game.teams.away.score) {
 							classGameStatus = 'is-home-winner';
 						} else {
 							classGameStatus = 'is-away-winner';
 						}
-					} else if (game.gameState === "Preview") {
+					} else if (game.gameStatus === "Preview") {
 						classGameStatus = 'is-preview';
 					}
 
 					return (
 						<li key={game.id} className={classGameStatus}>
 							<a href={`/game/${game.id}`}>
-								<div className="game-state">{game.gameState}</div>
-								<div className="team-row team-away">
+								<div className="schedule-results-game-status">{game.gameStatus}</div>
+								<div className="schedule-results-team away">
 									<Logo teamId={game.teams.away.id} />
-									<span className="team-name">{game.teams.away.name}
-										<span className="team-record">({game.teams.away.record})</span>
+									<span className="schedule-results-name">{game.teams.away.name}
+										<span className="schedule-results-record">({game.teams.away.record})</span>
 									</span>
-									<span className="team-score">{game.teams.away.score}</span>
+									<span className="schedule-results-score">{game.teams.away.score}</span>
 								</div>
-								<div className="team-row team-home">
+								<div className="schedule-results-team home">
 									<Logo teamId={game.teams.home.id} />
-									<span className="team-name">{game.teams.home.name}
-										<span className="team-record">({game.teams.home.record})</span>
+									<span className="schedule-results-name">{game.teams.home.name}
+										<span className="schedule-results-record">({game.teams.home.record})</span>
 									</span>
-									<span className="team-score">{game.teams.home.score}</span>
+									<span className="schedule-results-score">{game.teams.home.score}</span>
 								</div>
 							</a>
 						</li>
@@ -49,9 +49,9 @@ class ScheduleResults extends Component {
 			});
 
 			return (
-				<div key={date.date}>
+				<div key={date.date} className="schedule-results-group">
 					<h3>{date.date}</h3>
-					<ul className="schedule-results">
+					<ul className="schedule-results-games">
 						{games}
 					</ul>
 				</div>
@@ -59,7 +59,7 @@ class ScheduleResults extends Component {
 		});
 
 		return (
-			<div className="schedule-container">
+			<div className="schedule-results">
 				{dates}
 			</div>
 		);

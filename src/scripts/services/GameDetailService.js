@@ -14,6 +14,7 @@ class GameDetailService {
 		const periodGoals = _.get(data, 'liveData.linescore.periods');
 		const shootoutGoals = _.get(data, 'liveData.linescore.shootoutInfo');
 		const boxscoreTeams = _.get(data, 'liveData.boxscore.teams');
+		const stars = _.get(data, 'liveData.decisions');
 
 		let date = new Date(data.gameData.datetime.dateTime);
 		let curDate = date.toLocaleDateString(CONSTANTS.lang, CONSTANTS.dateOptions);
@@ -21,24 +22,31 @@ class GameDetailService {
 		let awayScore = data.liveData.linescore.teams.away.goals;
 		let homeScore = data.liveData.linescore.teams.home.goals;
 		let periods = UTILS.getPeriodStats(periodGoals, awayScore, homeScore, shootoutGoals);
-		let gameState = UTILS.getGameState(data.liveData.linescore);
-		let firstStar = UTILS.getStarStats(data.liveData.decisions.firstStar, boxscoreTeams);
-		let secondStar = UTILS.getStarStats(data.liveData.decisions.secondStar, boxscoreTeams);
-		let thirdStar = UTILS.getStarStats(data.liveData.decisions.thirdStar, boxscoreTeams);
-		let curState;
+		let gameStatus = UTILS.getGameStatus(data.liveData.linescore);
+		let curStars;
+		let curStatus;
 		let isPreview = true;
 
-		if (gameState.length) {
-			curState = gameState;
+		if (gameStatus.length) {
+			curStatus = gameStatus;
 			isPreview = false;
 		} else {
-			curState = startTime;
+			curStatus = startTime;
+		}
+
+		if (Object.keys(stars).length) {
+			console.log(Object.keys(stars).length);
+			let firstStar = UTILS.getStarStats(stars.firstStar, boxscoreTeams);
+			let secondStar = UTILS.getStarStats(stars.secondStar, boxscoreTeams);
+			let thirdStar = UTILS.getStarStats(stars.thirdStar, boxscoreTeams);
+
+			curStars = [firstStar, secondStar, thirdStar];
 		}
 
 		let results = {
 			isPreview: isPreview,
 			date: curDate,
-			gameState: curState,
+			gameStatus: curStatus,
 			periodGoals: periods,
 			teams: {
 				away: {
@@ -54,7 +62,7 @@ class GameDetailService {
 					score: homeScore,
 				}
 			},
-			stars: [firstStar, secondStar, thirdStar]
+			stars: curStars
 		}
 
 		// console.log('GameDetailService results', results);

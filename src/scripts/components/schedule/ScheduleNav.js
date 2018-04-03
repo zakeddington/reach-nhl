@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Loader from './Loader';
+import Loader from '../Loader';
 
 class ScheduleNav extends Component {
 

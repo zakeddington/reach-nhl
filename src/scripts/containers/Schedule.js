@@ -8,8 +8,8 @@ import autoBind from 'react-autobind';
 import { connect } from 'react-redux';
 import * as actions from '../store/schedule/actions';
 import * as reducer from '../store/schedule/reducer';
-import ScheduleNav from '../components/ScheduleNav';
-import ScheduleResults from '../components/ScheduleResults';
+import ScheduleNav from '../components/schedule/ScheduleNav';
+import ScheduleResults from '../components/schedule/ScheduleResults';
 
 class Schedule extends Component {
 
@@ -20,8 +20,8 @@ class Schedule extends Component {
 
 	componentDidMount() {
 		this.props.dispatch(actions.fetchScheduleNav());
-		this.props.dispatch(actions.fetchScheduleGames('2018-03-01', '2018-03-31'));
-		this.selectedNavItem = 'March';
+		this.props.dispatch(actions.fetchScheduleGames('2018-04-01', '2018-04-30'));
+		this.selectedNavItem = 'April';
 	}
 
 	render() {

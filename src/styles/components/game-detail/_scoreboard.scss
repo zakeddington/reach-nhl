@@ -1,0 +1,60 @@
+
+// Scoreboard & Stars container
+// -----------------------------------------------------------------+
+
+.scoreboard-stars {
+	display: flex;
+	margin: 2em auto;
+}
+
+// Scoreboard
+// -----------------------------------------------------------------+
+
+.scoreboard {
+	background: $color-white;
+	border-bottom: 1px solid $color-grey-med;
+	color: $color-grey-dark;
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+	width: 40%;
+
+	.scoreboard-results {
+		display: flex;
+		flex-direction: row;
+		font-size: 1.2em;
+		padding: 0.5em 1em;
+		width: 100%;
+
+		> :last-child {
+			font-weight: bold;
+		}
+	}
+
+	.scoreboard-teams {
+		flex: 3;
+	}
+
+	.scoreboard-periods {
+		flex: 1;
+
+		.scoreboard-item {
+			text-align: center;
+		}
+	}
+
+	.scoreboard-item {
+		border-bottom: 1px solid $color-grey-med;
+		display: block;
+		padding: 0.5em 0;
+
+		&:first-child {
+			color: $color-grey;
+			font-size: 0.8em;
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+}
