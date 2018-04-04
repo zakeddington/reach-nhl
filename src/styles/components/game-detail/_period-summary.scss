@@ -22,7 +22,7 @@
 	border-bottom: 1px solid $color-grey-med;
 	display: flex;
 	flex-direction: row;
-	font-size: 1.2em;
+	font-size: 1.125rem;
 	padding: 1em 2em;
 
 	&:last-child {
@@ -42,7 +42,7 @@
 .period-summary-title {
 	background: $color-grey;
 	color: $color-white;
-	font-size: 1em;
+	font-size: 1rem;
 	margin: 0;
 	padding: 0.5em 1em;
 	width: 100%;
@@ -51,7 +51,7 @@
 .period-summary-subtitle {
 	background: $color-grey-light;
 	color: $color-grey-dark;
-	font-size: 1.2em;
+	font-size: 1.125rem;
 	font-weight: 700;
 	margin: 0;
 	padding: 0.5em 1em;
@@ -82,14 +82,14 @@
 		}
 
 		.period-summary-goal-desc {
-			font-size: 0.8em;
+			font-size: 1rem;
 		}
 
 		.period-summary-goal-type {
 			background: $color-grey-dark;
 			border-radius: 3px;
 			color: $color-white;
-			font-size: 0.8em;
+			font-size: 0.875rem;
 			font-weight: 600;
 			padding: 0 0.4em;
 		}
@@ -97,7 +97,7 @@
 
 	.period-summary-details {
 		display: block;
-		font-size: 0.8em;
+		font-size: 0.875rem;
 	}
 }
 
@@ -109,7 +109,7 @@
 		border: 1px solid;
 		border-radius: 3px;
 		display: flex;
-		font-size: 0.8em;
+		font-size: 0.875rem;
 		font-weight: 600;
 		white-space: nowrap;
 

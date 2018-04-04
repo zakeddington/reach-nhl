@@ -5,6 +5,7 @@
 .schedule-nav {
 	border: 1px solid $color-grey-dark;
 	display: flex;
+	flex-wrap: wrap;
 	font-weight: 700;
 	margin-bottom: 3em;
 	text-align: center;
@@ -14,6 +15,15 @@
 		display: flex;
 		flex: 1;
 		margin: 0;
+
+		@media (min-width: $breakpoint-tablet-min) and (max-width: $breakpoint-tablet-max) {
+			font-size: 0.8rem;
+		}
+
+		@media (max-width: $breakpoint-mobile-max) {
+			flex-basis: 25%;
+			font-size: 0.625rem;
+		}
 
 		a {
 			background: $color-grey-dark;
