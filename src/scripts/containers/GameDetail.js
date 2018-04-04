@@ -11,6 +11,7 @@ import * as reducer from '../store/game-detail/reducer';
 import GameHeader from '../components/game-detail/GameHeader';
 import Scoreboard from '../components/game-detail/Scoreboard';
 import Stars from '../components/game-detail/Stars';
+import TeamStats from '../components/game-detail/TeamStats';
 import PeriodSummary from '../components/game-detail/PeriodSummary';
 
 class GameDetail extends Component {
@@ -33,9 +34,10 @@ class GameDetail extends Component {
 			<div className="site-content container">
 				<GameHeader gameDetail={this.props.gameDetail} />
 				<div className="scoreboard-stars">
-					<Stars gameDetail={this.props.gameDetail} />
 					<Scoreboard gameDetail={this.props.gameDetail} />
+					<Stars gameDetail={this.props.gameDetail} />
 				</div>
+				<TeamStats gameDetail={this.props.gameDetail} />
 				<PeriodSummary periodSummary={this.props.periodSummary} />
 			</div>
 		);

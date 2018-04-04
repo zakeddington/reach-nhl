@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import Loader from '../Loader';
+import Logo from '../Logo';
 
 class Scoreboard extends Component {
 
 	getPeriodGoals(data) {
 		let goals = _.map(data, (goal) => {
 			return (
-				<span key={Math.random()} className="scoreboard-item">{goal}</span>
+				<div key={Math.random()} className="scoreboard-item">
+					<span>{goal}</span>
+				</div>
 			)
 		})
 
@@ -33,9 +36,17 @@ class Scoreboard extends Component {
 				<h3 className="header-title">{data.gameStatus}</h3>
 				<div className="scoreboard-results">
 					<div className="scoreboard-teams">
-						<span className="scoreboard-item">&nbsp;</span>
-						<span className="scoreboard-item">{data.teams.away.name}</span>
-						<span className="scoreboard-item">{data.teams.home.name}</span>
+						<div className="scoreboard-item">
+							<span>&nbsp;</span>
+						</div>
+						<div className="scoreboard-item">
+							<Logo teamId={data.teams.away.id} />
+							<span>{data.teams.away.name}</span>
+						</div>
+						<div className="scoreboard-item">
+							<Logo teamId={data.teams.home.id} />
+							<span>{data.teams.home.name}</span>
+						</div>
 					</div>
 					{
 						_.map(data.periodGoals, (periods) => {

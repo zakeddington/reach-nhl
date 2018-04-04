@@ -3,8 +3,12 @@
 // -----------------------------------------------------------------+
 
 .scoreboard-stars {
-	display: flex;
 	margin: 2em auto;
+
+	@media (min-width: $breakpoint-desktop-min) {
+		display: flex;
+		flex-direction: row-reverse;
+	}
 }
 
 // Scoreboard
@@ -16,8 +20,13 @@
 	color: $color-grey-dark;
 	display: flex;
 	flex-direction: column;
-	margin: 0 auto;
-	width: 40%;
+	margin: 0 auto 2em;
+	width: 100%;
+
+	@media (min-width: $breakpoint-desktop-min) {
+		margin-bottom: 0;
+		width: 40%;
+	}
 
 	.scoreboard-results {
 		display: flex;
@@ -27,12 +36,13 @@
 		width: 100%;
 
 		> :last-child {
-			font-weight: bold;
+			font-weight: 700;
 		}
 	}
 
 	.scoreboard-teams {
 		flex: 3;
+		font-weight: 600;
 	}
 
 	.scoreboard-periods {
@@ -45,8 +55,22 @@
 
 	.scoreboard-item {
 		border-bottom: 1px solid $color-grey-med;
-		display: block;
-		padding: 0.5em 0;
+		height: 50px;
+		padding: 10px 0;
+		white-space: nowrap;
+
+		span {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.team-logo {
+			display: inline-block;
+			height: 30px;
+			margin-right: 0.5em;
+			vertical-align: middle;
+			width: 30px;
+		}
 
 		&:first-child {
 			color: $color-grey;

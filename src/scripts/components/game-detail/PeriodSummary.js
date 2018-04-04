@@ -47,8 +47,8 @@ class PeriodSummary extends Component {
 						</div>
 						<div className="period-summary-game-info">
 							<span className={`period-summary-score team-${goal.teamId} team-border`}>
-								<span className={goal.score.away.isScoringTeam ? 'team-background' : ''}>{goal.score.away.name}&nbsp;&nbsp;{goal.score.away.goals}</span>
-								<span className={goal.score.home.isScoringTeam ? 'team-background' : ''}>{goal.score.home.name}&nbsp;&nbsp;{goal.score.home.goals}</span>
+								<span className={goal.score.away.isScoringTeam ? 'team-background' : ''}>{goal.score.away.name} {goal.score.away.goals}</span>
+								<span className={goal.score.home.isScoringTeam ? 'team-background' : ''}>{goal.score.home.name} {goal.score.home.goals}</span>
 							</span>
 						</div>
 					</div>

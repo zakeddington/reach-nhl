@@ -7,8 +7,14 @@
 	border-bottom: 1px solid $color-grey-med;
 	display: flex;
 	flex-direction: column;
-	margin-right: 2em;
-	width: calc(60% - 2em);
+	margin-bottom: 2em;
+	width: 100%;
+
+	@media (min-width: $breakpoint-desktop-min) {
+		margin-bottom: 0;
+		margin-right: 2em;
+		width: calc(60% - 2em);
+	}
 }
 
 .stars-container {

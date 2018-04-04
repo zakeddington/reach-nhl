@@ -13,7 +13,7 @@ export function fetchGameDetail(gameId) {
 		try {
 			const gameDetail = await GameDetailService.getGameDetail(gameId);
 
-			// console.log('actions fetchGameDetail', gameDetail);
+			console.log('actions fetchGameDetail', gameDetail);
 
 			dispatch({ type: types.GAME_DETAIL_FETCHED, gameDetail });
 		} catch (error) {
@@ -27,7 +27,7 @@ export function fetchPeriodSummary(gameId) {
 		try {
 			const periodSummary = await GameDetailService.getPeriodSummary(gameId);
 
-			console.log('actions fetchPeriodSummary', periodSummary);
+			// console.log('actions fetchPeriodSummary', periodSummary);
 
 			dispatch({ type: types.PERIOD_SUMMARY_FETCHED, periodSummary });
 		} catch (error) {

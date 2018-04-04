@@ -3,10 +3,9 @@
 // -----------------------------------------------------------------+
 
 .schedule-nav {
-	background: rgba($color-grey, 0.2);
-	border: 1px solid rgba($color-grey, 0.2);
+	border: 1px solid $color-grey-dark;
 	display: flex;
-	font-weight: bold;
+	font-weight: 700;
 	margin-bottom: 3em;
 	text-align: center;
 	text-transform: uppercase;
@@ -17,20 +16,23 @@
 		margin: 0;
 
 		a {
-			color: $color-grey;
+			background: $color-grey-dark;
+			color: $color-white;
 			display: block;
 			padding: 5px;
 			text-decoration: none;
+			transition: all $anim-speed $anim-ease;
 			width: 100%;
 
 			&:hover,
 			&:focus {
+				background: $color-grey-light;
 				color: $color-grey-dark;
 			}
 		}
 
 		span {
-			background: rgba($color-white, 0.9);
+			background: $color-white;
 			color: $color-grey-dark;
 			display: block;
 			padding: 5px;

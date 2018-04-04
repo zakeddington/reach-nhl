@@ -61,7 +61,8 @@ class GameDetailService {
 					score: homeScore,
 				}
 			},
-			stars: curStars
+			stars: curStars,
+			boxscoreTeams: boxscoreTeams,
 		}
 
 		// console.log('GameDetailService results', results);

@@ -32,6 +32,10 @@
 	> div {
 		padding-left: 0.5em;
 		padding-right: 0.5em;
+
+		&.period-summary-logo {
+			padding: 0;
+		}
 	}
 }
 
@@ -48,7 +52,7 @@
 	background: $color-grey-light;
 	color: $color-grey-dark;
 	font-size: 1.2em;
-	font-weight: bold;
+	font-weight: 700;
 	margin: 0;
 	padding: 0.5em 1em;
 	text-transform: uppercase;
@@ -58,23 +62,13 @@
 	padding: 1em 0;
 }
 
-.period-summary-logo {
-	height: 60px;
-	width: 60px;
-}
-
 .period-summary-time {
-	// padding: 0 2em;
 	text-align: center;
 	width: 10%;
 }
 
-.period-summary-photo {
-	// padding: 0 1em;
-}
-
 .period-summary-player-info {
-	flex: 5;
+	flex: 3;
 
 	.period-summary-player {
 		display: block;
@@ -115,12 +109,11 @@
 		border: 1px solid;
 		border-radius: 3px;
 		display: flex;
-		font-size: 0.9em;
+		font-size: 0.8em;
 		font-weight: 600;
 		white-space: nowrap;
 
 		span {
-			padding: 0 5px;
 			width: 50%;
 		}
 	}
