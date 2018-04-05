@@ -22,6 +22,11 @@
 	flex-direction: row;
 	padding: 1em;
 	width: 100%;
+
+	@media (max-width: $breakpoint-mobile-max) {
+		padding-left: 0.5em;
+		padding-right: 0.5em;
+	}
 }
 
 .stars-player {
@@ -31,8 +36,12 @@
 	flex-direction: column;
 	text-align: center;
 
-	.stars-photo {
-		margin: 0;
+	.player-photo {
+		margin-bottom: 0.5em;
+
+		@media (max-width: $breakpoint-mobile-max) {
+			display: block;
+		}
 	}
 
 	.stars-name {
@@ -40,9 +49,19 @@
 		font-weight: 700;
 		width: 100%;
 
+		@media (max-width: $breakpoint-mobile-max) {
+			line-height: 1.2;
+		}
+
 		.stars-team-name {
 			font-weight: normal;
 			padding-left: 0.5em;
+
+			@media (max-width: $breakpoint-mobile-max) {
+				display: block;
+				line-height: 1.5;
+				padding-left: 0;
+			}
 		}
 	}
 

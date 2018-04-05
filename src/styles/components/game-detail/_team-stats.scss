@@ -37,10 +37,13 @@
 		text-align: left;
 		white-space: nowrap;
 
+		@media (min-width: $breakpoint-desktop-min) {
+			width: 20%;
+		}
+
 		@media (min-width: $breakpoint-tablet-min) {
 			font-size: 1.125rem;
 			padding-left: 2em;
-			width: 20%;
 		}
 
 		.team-logo {

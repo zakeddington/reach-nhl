@@ -45,14 +45,14 @@ class TeamStats extends Component {
 					<thead>
 						<tr>
 							<th></th>
-							<th>SOG</th>
-							<th>FO%</th>
-							<th>PP</th>
-							<th>PIM</th>
-							<th>HT</th>
-							<th>BS</th>
-							<th>GV</th>
-							<th>TK</th>
+							<th className="tooltip">SOG <span className="tooltip-content">Shots on Goal</span></th>
+							<th className="tooltip">FO% <span className="tooltip-content">Faceoff Win Percentage</span></th>
+							<th className="tooltip">PP <span className="tooltip-content">Power Play Goals/Opportunities</span></th>
+							<th className="tooltip">PIM <span className="tooltip-content">Penalty Minutes</span></th>
+							<th className="tooltip">HT <span className="tooltip-content">Hits</span></th>
+							<th className="tooltip">BS <span className="tooltip-content">Blocked Shots</span></th>
+							<th className="tooltip">GV <span className="tooltip-content">Giveaways</span></th>
+							<th className="tooltip">TK <span className="tooltip-content">Takeaways</span></th>
 						</tr>
 					</thead>
 					<tbody>

@@ -25,6 +25,10 @@
 	font-size: 1.125rem;
 	padding: 1em 2em;
 
+	@media (max-width: $breakpoint-mobile-max) {
+		padding: 1em 0.5em;
+	}
+
 	&:last-child {
 		border-bottom: none;
 	}
@@ -35,6 +39,10 @@
 
 		&.period-summary-logo {
 			padding: 0;
+
+			@media (max-width: $breakpoint-mobile-max) {
+				display: none;
+			}
 		}
 	}
 }
@@ -83,6 +91,10 @@
 
 		.period-summary-goal-desc {
 			font-size: 1rem;
+
+			@media (max-width: $breakpoint-mobile-max) {
+				display: block;
+			}
 		}
 
 		.period-summary-goal-type {
@@ -98,6 +110,12 @@
 	.period-summary-details {
 		display: block;
 		font-size: 0.875rem;
+
+		@media (max-width: $breakpoint-mobile-max) {
+			span {
+				display: inline-block;
+			}
+		}
 	}
 }
 
@@ -113,8 +131,16 @@
 		font-weight: 600;
 		white-space: nowrap;
 
+		@media (max-width: $breakpoint-mobile-max) {
+			flex-direction: column;
+		}
+
 		span {
 			width: 50%;
+
+			@media (max-width: $breakpoint-mobile-max) {
+				width: 100%;
+			}
 		}
 	}
 }
