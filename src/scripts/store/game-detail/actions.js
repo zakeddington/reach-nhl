@@ -13,9 +13,23 @@ export function fetchGameDetail(gameId) {
 		try {
 			const gameDetail = await GameDetailService.getGameDetail(gameId);
 
-			console.log('actions fetchGameDetail', gameDetail);
+			// console.log('actions fetchGameDetail', gameDetail);
 
 			dispatch({ type: types.GAME_DETAIL_FETCHED, gameDetail });
+		} catch (error) {
+			console.error(error);
+		}
+	};
+}
+
+export function fetchGameContent(gameId) {
+	return async(dispatch, getState) => {
+		try {
+			const gameContent = await GameDetailService.getGameContent(gameId);
+
+			console.log('actions fetchGameContent', gameContent);
+
+			dispatch({ type: types.GAME_CONTENT_FETCHED, gameContent });
 		} catch (error) {
 			console.error(error);
 		}

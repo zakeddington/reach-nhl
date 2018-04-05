@@ -9,6 +9,7 @@ import immutable from 'seamless-immutable';
 
 const initialState = immutable({
 	gameDetail: {},
+	gameContent: {},
 	periodSummary: {},
 });
 
@@ -17,6 +18,10 @@ export default function reduce(state = initialState, action = {}) {
 		case types.GAME_DETAIL_FETCHED:
 			return state.merge({
 				gameDetail: action.gameDetail
+			});
+		case types.GAME_CONTENT_FETCHED:
+			return state.merge({
+				gameContent: action.gameContent
 			});
 		case types.PERIOD_SUMMARY_FETCHED:
 			return state.merge({
@@ -31,6 +36,10 @@ export default function reduce(state = initialState, action = {}) {
 
 export function getGameDetail(state) {
 	return state.game.gameDetail;
+}
+
+export function getGameContent(state) {
+	return state.game.gameContent;
 }
 
 export function getPeriodSummary(state) {

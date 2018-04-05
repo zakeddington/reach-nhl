@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import * as actions from '../store/game-detail/actions';
 import * as reducer from '../store/game-detail/reducer';
 import GameHeader from '../components/game-detail/GameHeader';
+import GameIntro from '../components/game-detail/GameIntro';
 import Scoreboard from '../components/game-detail/Scoreboard';
 import Stars from '../components/game-detail/Stars';
 import TeamStats from '../components/game-detail/TeamStats';
@@ -26,6 +27,7 @@ class GameDetail extends Component {
 		let gameId = path.match(/([^/]*)\/*$/)[1];
 
 		this.props.dispatch(actions.fetchGameDetail(gameId));
+		this.props.dispatch(actions.fetchGameContent(gameId));
 		this.props.dispatch(actions.fetchPeriodSummary(gameId));
 	}
 
@@ -33,6 +35,7 @@ class GameDetail extends Component {
 		return (
 			<div className="site-content container">
 				<GameHeader gameDetail={this.props.gameDetail} />
+				<GameIntro gameContent={this.props.gameContent} />
 				<div className="scoreboard-stars">
 					<Scoreboard gameDetail={this.props.gameDetail} />
 					<Stars gameDetail={this.props.gameDetail} />
@@ -48,9 +51,11 @@ class GameDetail extends Component {
 // always use selectors here and avoid accessing the state directly
 function mapStateToProps(state) {
 	const gameDetail = reducer.getGameDetail(state);
+	const gameContent = reducer.getGameContent(state);
 	const periodSummary = reducer.getPeriodSummary(state);
 	return {
 		gameDetail,
+		gameContent,
 		periodSummary,
 	};
 }

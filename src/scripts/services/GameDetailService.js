@@ -70,6 +70,66 @@ class GameDetailService {
 		return results;
 	}
 
+async getGameContent(gameId) {
+	const data = await API.getGameContent(gameId);
+	const previewData = data.editorial.preview.items[0];
+	const recapData = data.editorial.recap.items[0];
+	const mediaData = data.media.epg;
+
+	let isRecap = false;
+	let title;
+	let desc;
+	let poster;
+	let posterAltText;
+	let recapVideo;
+	let recapPoster;
+
+	// TODO
+	// not all future games have preview data - what do we show there?
+	// convert recap video to tab switcher with all videos (https://github.com/reactjs/react-tabs ?)
+	// only load video poster until click
+
+	if (previewData) {
+		title = previewData.headline;
+		desc = previewData.seoDescription;
+		poster = previewData.media.image.cuts['1284x722'].src;
+		posterAltText = previewData.media.image.altText;
+	}
+
+	if (recapData) {
+		isRecap = true;
+		title = recapData.headline;
+		desc = recapData.seoDescription;
+
+		_.forEach(mediaData, (item) => {
+			if (item.title === 'Recap') {
+				let videos = item.items[0].playbacks;
+				recapPoster = item.items[0].image.cuts['1136x640'].src;
+
+				_.forEach(videos, (video) => {
+					if (video.name === 'FLASH_1200K_640X360') {
+						recapVideo = video.url;
+					}
+				});
+			}
+		});
+	}
+
+	let results = {
+		isRecap: isRecap,
+		title: title,
+		desc: desc,
+		poster: poster,
+		posterAltText: posterAltText,
+		recapVideo: recapVideo,
+		recapPoster: recapPoster,
+	}
+
+	console.log('getGameContent', results);
+
+	return results;
+}
+
 	async getPeriodSummary(gameId) {
 		const data = await API.getGame(gameId);
 		const periods = _.get(data, 'liveData.linescore.periods');

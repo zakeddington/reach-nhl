@@ -31,6 +31,17 @@ class API {
 		});
 	}
 
+	getGameContent(gameId) {
+		return new Promise((resolve, reject) => {
+			try {
+				let url = `${API_BASE_URL}game/${gameId}/content`;
+				resolve(this.getData(url));
+			} catch(e) {
+				reject(e);
+			}
+		});
+	}
+
 	getQueryParams(arrParams) {
 		let params = arrParams;
 		let strParams = 'expand=';
