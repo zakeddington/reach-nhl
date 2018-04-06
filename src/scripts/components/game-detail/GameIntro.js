@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loader from '../Loader';
+import VideoPlayer from '../VideoPlayer';
 
 class GameIntro extends Component {
 
@@ -17,7 +18,7 @@ class GameIntro extends Component {
 				<div className="game-intro-media">
 					{
 						data.isRecap ? (
-							<video src={data.recapVideo} poster={data.recapPoster} controls />
+							<VideoPlayer showVideo={false} poster={data.recapPoster} video={data.recapVideo} altText={data.posterAltText} />
 						) : (
 							<img src={data.poster} alt={data.posterAltText} />
 						)

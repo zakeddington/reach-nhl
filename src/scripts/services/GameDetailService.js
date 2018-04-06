@@ -84,11 +84,6 @@ async getGameContent(gameId) {
 	let recapVideo;
 	let recapPoster;
 
-	// TODO
-	// not all future games have preview data - what do we show there?
-	// convert recap video to tab switcher with all videos (https://github.com/reactjs/react-tabs ?)
-	// only load video poster until click
-
 	if (previewData) {
 		title = previewData.headline;
 		desc = previewData.seoDescription;
@@ -107,7 +102,7 @@ async getGameContent(gameId) {
 				recapPoster = item.items[0].image.cuts['1136x640'].src;
 
 				_.forEach(videos, (video) => {
-					if (video.name === 'FLASH_1200K_640X360') {
+					if (video.name === 'FLASH_1800K_960X540') {
 						recapVideo = video.url;
 					}
 				});
