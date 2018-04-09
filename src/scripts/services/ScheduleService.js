@@ -6,13 +6,8 @@ import _ from 'lodash';
 import CONSTANTS from '../config/Constants';
 import API from './API';
 import UTILS from './Utils';
-import calendar from '../store/schedule/Calendar2017-2018';
 
 class ScheduleService {
-
-	async getScheduleNav() {
-		return calendar;
-	}
 
 	async getScheduleGames(dateFrom, dateTo, params) {
 		const data = await API.getSchedule(dateFrom, dateTo, params);

@@ -10,6 +10,12 @@ class ScheduleResults extends Component {
 		);
 	}
 
+	renderNoContent() {
+		return (
+			<h2>There are no games scheduled on this date.</h2>
+		)
+	}
+
 	renderContent(data) {
 		let dates = data.map((date) => {
 			let games = date.games.map((game, i) => {
@@ -68,11 +74,15 @@ class ScheduleResults extends Component {
 	render() {
 		let data = this.props.scheduleGames;
 
+		if (this.props.scheduleIsLoading) {
+			return this.renderLoading();
+		}
+
 		if (data.length || Object.keys(data).length) {
 			return this.renderContent(data);
 		}
 
-		return this.renderLoading();
+		return this.renderNoContent();
 	}
 }
 

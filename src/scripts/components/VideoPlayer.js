@@ -18,7 +18,7 @@ class VideoPlayer extends Component {
 		return(
 			<button className="video-trigger" onClick={this.onClick}>
 				<img src={this.props.poster} alt={this.props.altText} />
-				<svg className="video-trigger-icon">
+				<svg className="icon-play">
 					<use xlinkHref="/assets/images/icons.svg#icon-play-circle-filled"></use>
 				</svg>
 			</button>

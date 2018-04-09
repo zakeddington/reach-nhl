@@ -8,17 +8,6 @@
 import * as types from './actionTypes';
 import ScheduleService from '../../services/ScheduleService';
 
-export function fetchScheduleNav() {
-	return async(dispatch, getState) => {
-		try {
-			const scheduleNav = await ScheduleService.getScheduleNav();
-			dispatch({ type: types.SCHEDULE_NAV_FETCHED, scheduleNav });
-		} catch (error) {
-			console.error(error);
-		}
-	};
-}
-
 export function fetchScheduleGames(dateFrom, dateTo) {
 	return async(dispatch, getState) => {
 		try {

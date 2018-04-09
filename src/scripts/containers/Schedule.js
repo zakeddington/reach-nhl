@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import * as actions from '../store/schedule/actions';
 import * as reducer from '../store/schedule/reducer';
@@ -19,35 +20,35 @@ class Schedule extends Component {
 	}
 
 	componentDidMount() {
-		this.props.dispatch(actions.fetchScheduleNav());
-		this.props.dispatch(actions.fetchScheduleGames('2018-04-01', '2018-04-30'));
-		this.selectedNavItem = 'April';
+		let dateFormat = 'YYYY-MM-DD';
+		let today = moment().format(dateFormat);
+
+		this.props.dispatch(actions.fetchScheduleGames(today, today));
 	}
 
 	render() {
 		return (
 			<div className="site-content container">
-				<h2>2017-2018 Season</h2>
-				<ScheduleNav scheduleNav={this.props.scheduleNav} onClick={this.onMonthClick} selectedNavItem={this.selectedNavItem} />
-				<ScheduleResults scheduleGames={this.props.scheduleGames} />
+				<ScheduleNav fetchGames={this.onNavClick} />
+				<ScheduleResults scheduleGames={this.props.scheduleGames} scheduleIsLoading={this.props.scheduleIsLoading} />
 			</div>
 		);
 	}
 
-	onMonthClick(startDate, endDate, monthName) {
+	onNavClick(startDate, endDate) {
+		console.log('onNavClick', startDate, endDate);
 		this.props.dispatch(actions.fetchScheduleGames(startDate, endDate));
-		this.selectedNavItem = monthName;
 	}
 }
 
 // which props do we want to inject, given the global store state?
 // always use selectors here and avoid accessing the state directly
 function mapStateToProps(state) {
-	const scheduleNav = reducer.getScheduleNav(state);
 	const scheduleGames = reducer.getScheduleGames(state);
+	const scheduleIsLoading = reducer.getScheduleLoadingState(state);
 	return {
-		scheduleNav,
 		scheduleGames,
+		scheduleIsLoading,
 	};
 }
 

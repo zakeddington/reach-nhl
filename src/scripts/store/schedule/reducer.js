@@ -8,19 +8,16 @@ import * as types from './actionTypes';
 import immutable from 'seamless-immutable';
 
 const initialState = immutable({
-	scheduleNav: [],
 	scheduleGames: [],
+	scheduleIsLoading: true,
 });
 
 export default function reduce(state = initialState, action = {}) {
 	switch (action.type) {
-		case types.SCHEDULE_NAV_FETCHED:
-			return state.merge({
-				scheduleNav: action.scheduleNav
-			});
 		case types.SCHEDULE_GAMES_FETCHED:
 			return state.merge({
-				scheduleGames: action.scheduleGames
+				scheduleGames: action.scheduleGames,
+				scheduleIsLoading: false,
 			});
 		default:
 			return state;
@@ -29,10 +26,10 @@ export default function reduce(state = initialState, action = {}) {
 
 // selectors
 
-export function getScheduleNav(state) {
-	return state.schedule.scheduleNav;
-}
-
 export function getScheduleGames(state) {
 	return state.schedule.scheduleGames;
+}
+
+export function getScheduleLoadingState(state) {
+	return state.schedule.scheduleIsLoading;
 }

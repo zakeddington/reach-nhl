@@ -5,12 +5,11 @@
 .video-trigger {
 	background: none;
 	border: none;
-	cursor: pointer;
 	padding: 0;
 	position: relative;
 	width: 100%;
 
-	.video-trigger-icon {
+	.icon-play {
 		display: block;
 		fill: $color-white;
 		height: 10em;
@@ -35,7 +34,7 @@
 
 	&:hover,
 	&:focus {
-		.video-trigger-icon {
+		.icon-play {
 			opacity: 1;
 		}
 	}
