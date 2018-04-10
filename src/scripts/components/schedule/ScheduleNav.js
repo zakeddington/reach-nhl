@@ -95,6 +95,8 @@ class ScheduleNav extends Component {
 	onDatePickerChange(dateObj) {
 		let urlDate = dateObj.format(CONSTANTS.momentOptions.apiFormat);
 
+		this.props.history.push(`${CONSTANTS.routePaths.schedule}${urlDate}`);
+
 		this.setNavDates(dateObj);
 		this.props.fetchGames(urlDate, urlDate);
 	}
@@ -105,7 +107,7 @@ class ScheduleNav extends Component {
 		let activeClass = dateObj.isActive ? 'is-active' : '';
 
 		return (
-			<Link to={`/schedule/${urlDate}`} className={`schedule-nav-item ${activeClass}`} onClick={(e) => this.onNavClick(e, dateObj)}>
+			<Link to={`${CONSTANTS.routePaths.schedule}${urlDate}`} className={`schedule-nav-item ${activeClass}`} onClick={(e) => this.onNavClick(e, dateObj)}>
 				{displayDay}
 			</Link>
 		)

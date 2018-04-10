@@ -4,6 +4,11 @@
  */
 
 const Constants = {
+	routePaths: {
+		schedule: '/schedule/',
+		game: '/game/',
+	},
+
 	imgUrl: {
 		logoTeams: {
 			base: '/assets/images/logo-teams.svg#team-',

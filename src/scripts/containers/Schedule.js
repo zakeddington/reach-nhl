@@ -28,7 +28,12 @@ class Schedule extends Component {
 	render() {
 		return (
 			<div className="site-content container">
-				<ScheduleNav fetchGames={this.onNavClick} scheduleStartDate={this.props.scheduleStartDate} scheduleIsLoading={this.props.scheduleIsLoading} />
+				<ScheduleNav
+					history={this.props.history}
+					fetchGames={this.onNavClick}
+					scheduleStartDate={this.props.scheduleStartDate}
+					scheduleIsLoading={this.props.scheduleIsLoading}
+				/>
 				<ScheduleResults scheduleGames={this.props.scheduleGames} scheduleIsLoading={this.props.scheduleIsLoading} />
 			</div>
 		);

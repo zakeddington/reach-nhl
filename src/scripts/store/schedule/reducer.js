@@ -42,8 +42,8 @@ export function getScheduleStartDate(state) {
 	let startDate = moment();
 	let pathname = window.location.pathname;
 
-	if (pathname.indexOf('/schedule/') !== -1) {
-		let date = pathname.replace('/schedule/', '');
+	if (pathname.indexOf(CONSTANTS.routePaths.schedule) !== -1) {
+		let date = pathname.replace(CONSTANTS.routePaths.schedule, '');
 		startDate = moment(date, dateFormat);
 	}
 	return startDate;

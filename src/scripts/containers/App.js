@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/GlobalHeader';
 import Schedule from './Schedule';
 import GameDetail from './GameDetail';
+import CONSTANTS from '../config/Constants';
 
 class App extends Component {
 
@@ -13,8 +14,8 @@ class App extends Component {
 				<Header/>
 				<Switch>
 					<Route exact path="/" component={Schedule} />
-					<Route exact path="/schedule/:id" component={Schedule} />
-					<Route path="/game/:id" component={GameDetail} />
+					<Route exact path={`${CONSTANTS.routePaths.schedule}:id`} component={Schedule} />
+					<Route path={`${CONSTANTS.routePaths.game}:id`} component={GameDetail} />
 					<Redirect to="/" />
 				</Switch>
 			</div>

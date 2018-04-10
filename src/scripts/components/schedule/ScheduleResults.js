@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Loader from '../Loader';
 import Logo from '../Logo';
+import CONSTANTS from '../../config/Constants';
 
 class ScheduleResults extends Component {
 
@@ -33,7 +34,7 @@ class ScheduleResults extends Component {
 
 				return (
 					<li key={game.id} className={classGameStatus}>
-						<a href={`/game/${game.id}`}>
+						<a href={`${CONSTANTS.routePaths.game}${game.id}`}>
 							<div className="schedule-results-game-status">{game.gameStatus}</div>
 							<div className="schedule-results-team away">
 								<Logo teamId={game.teams.away.id} />
