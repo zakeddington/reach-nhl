@@ -16,6 +16,11 @@ const Constants = {
 
 	lang: 'en-US',
 
+	momentOptions: {
+		apiFormat:  'YYYY-MM-DD',
+		displayFormat: 'ddd, MMM D',
+	},
+
 	dateOptions: {
 		weekday : 'long',
 		year    : 'numeric',

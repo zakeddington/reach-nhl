@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import autoBind from 'react-autobind';
 import DatePicker from 'react-datepicker';
-import moment from 'moment';
+import CONSTANTS from '../../config/Constants';
 
 class DatepickerTrigger extends Component {
 	render () {
@@ -23,8 +24,7 @@ class ScheduleNav extends Component {
 	}
 
 	componentWillMount() {
-		let today = moment();
-		this.setNavDates(today);
+		this.setNavDates(this.props.scheduleStartDate);
 	}
 
 	setNavDates(dateObj) {
@@ -68,12 +68,12 @@ class ScheduleNav extends Component {
 	}
 
 	onNavClick(e, dateObj) {
-		e.preventDefault();
-
-		if (!this.props.scheduleIsLoading) {
+		if (this.props.scheduleIsLoading) {
+			e.preventDefault();
+		} else {
 			let curDateObj = dateObj;
 			let curNavDates = this.state.navDates;
-			let urlDate = curDateObj.day.format('YYYY-MM-DD');
+			let urlDate = curDateObj.day.format(CONSTANTS.momentOptions.apiFormat);
 
 			_.forEach(curNavDates, (navDate) => {
 				if (curDateObj.day === navDate.day) {
@@ -93,20 +93,22 @@ class ScheduleNav extends Component {
 	}
 
 	onDatePickerChange(dateObj) {
-		let urlDate = dateObj.format('YYYY-MM-DD');
+		let urlDate = dateObj.format(CONSTANTS.momentOptions.apiFormat);
 
 		this.setNavDates(dateObj);
 		this.props.fetchGames(urlDate, urlDate);
 	}
 
 	createNavDays(dateObj) {
-		let displayDay = dateObj.day.format('ddd, MMM D');
+		let displayDay = dateObj.day.format(CONSTANTS.momentOptions.displayFormat);
+		let urlDate = dateObj.day.format(CONSTANTS.momentOptions.apiFormat);
+		let activeClass = dateObj.isActive ? 'is-active' : '';
 
-		let	navItem = <button disabled={dateObj.isActive} onClick={(e) => this.onNavClick(e, dateObj)}>
+		return (
+			<Link to={`/schedule/${urlDate}`} className={`schedule-nav-item ${activeClass}`} onClick={(e) => this.onNavClick(e, dateObj)}>
 				{displayDay}
-			</button>;
-
-		return navItem;
+			</Link>
+		)
 	}
 
 	render() {

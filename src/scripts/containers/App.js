@@ -13,6 +13,7 @@ class App extends Component {
 				<Header/>
 				<Switch>
 					<Route exact path="/" component={Schedule} />
+					<Route exact path="/schedule/:id" component={Schedule} />
 					<Route path="/game/:id" component={GameDetail} />
 					<Redirect to="/" />
 				</Switch>

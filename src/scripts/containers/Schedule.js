@@ -5,12 +5,13 @@
 
 import React, { Component } from 'react';
 import autoBind from 'react-autobind';
-import moment from 'moment';
+// import moment from 'moment';
 import { connect } from 'react-redux';
 import * as actions from '../store/schedule/actions';
 import * as reducer from '../store/schedule/reducer';
 import ScheduleNav from '../components/schedule/ScheduleNav';
 import ScheduleResults from '../components/schedule/ScheduleResults';
+import CONSTANTS from '../config/Constants';
 
 class Schedule extends Component {
 
@@ -19,17 +20,15 @@ class Schedule extends Component {
 		autoBind(this);
 	}
 
-	componentDidMount() {
-		let dateFormat = 'YYYY-MM-DD';
-		let today = moment().format(dateFormat);
-
+	componentWillMount() {
+		let today = this.props.scheduleStartDate.format(CONSTANTS.momentOptions.apiFormat);
 		this.props.dispatch(actions.fetchScheduleGames(today, today));
 	}
 
 	render() {
 		return (
 			<div className="site-content container">
-				<ScheduleNav fetchGames={this.onNavClick} scheduleIsLoading={this.props.scheduleIsLoading} />
+				<ScheduleNav fetchGames={this.onNavClick} scheduleStartDate={this.props.scheduleStartDate} scheduleIsLoading={this.props.scheduleIsLoading} />
 				<ScheduleResults scheduleGames={this.props.scheduleGames} scheduleIsLoading={this.props.scheduleIsLoading} />
 			</div>
 		);
@@ -44,9 +43,12 @@ class Schedule extends Component {
 // always use selectors here and avoid accessing the state directly
 function mapStateToProps(state) {
 	const scheduleGames = reducer.getScheduleGames(state);
+	const scheduleStartDate = reducer.getScheduleStartDate(state);
 	const scheduleIsLoading = reducer.getScheduleLoadingState(state);
+
 	return {
 		scheduleGames,
+		scheduleStartDate,
 		scheduleIsLoading,
 	};
 }

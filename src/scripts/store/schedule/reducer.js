@@ -6,9 +6,12 @@
 
 import * as types from './actionTypes';
 import immutable from 'seamless-immutable';
+import moment from 'moment';
+import CONSTANTS from '../../config/Constants';
 
 const initialState = immutable({
 	scheduleGames: [],
+	scheduleStartDate: null,
 	scheduleIsLoading: true,
 });
 
@@ -32,6 +35,18 @@ export default function reduce(state = initialState, action = {}) {
 
 export function getScheduleGames(state) {
 	return state.schedule.scheduleGames;
+}
+
+export function getScheduleStartDate(state) {
+	let dateFormat = CONSTANTS.momentOptions.apiFormat;
+	let startDate = moment();
+	let pathname = window.location.pathname;
+
+	if (pathname.indexOf('/schedule/') !== -1) {
+		let date = pathname.replace('/schedule/', '');
+		startDate = moment(date, dateFormat);
+	}
+	return startDate;
 }
 
 export function getScheduleLoadingState(state) {

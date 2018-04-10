@@ -67,7 +67,7 @@
 			}
 		}
 
-		button {
+		.schedule-nav-item {
 			background: $color-grey-dark;
 			border: none;
 			color: $color-white;
@@ -87,7 +87,7 @@
 				color: $color-grey-dark;
 			}
 
-			&:disabled {
+			&.is-active {
 				background: $color-white;
 				color: $color-grey-dark;
 				cursor: default;
