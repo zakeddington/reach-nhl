@@ -19,39 +19,39 @@ class ScheduleResults extends Component {
 	renderContent(data) {
 		let dates = data.map((date) => {
 			let games = date.games.map((game, i) => {
-					let classGameStatus = '';
+				let classGameStatus = '';
 
-					if (game.gameStatus.includes("Final")) {
-						if (game.teams.home.score > game.teams.away.score) {
-							classGameStatus = 'is-home-winner';
-						} else {
-							classGameStatus = 'is-away-winner';
-						}
-					} else if (game.gameStatus === "Preview") {
-						classGameStatus = 'is-preview';
+				if (game.gameStatus.includes("Final")) {
+					if (game.teams.home.score > game.teams.away.score) {
+						classGameStatus = 'is-home-winner';
+					} else {
+						classGameStatus = 'is-away-winner';
 					}
+				} else if (game.gameStatus === "Preview") {
+					classGameStatus = 'is-preview';
+				}
 
-					return (
-						<li key={game.id} className={classGameStatus}>
-							<a href={`/game/${game.id}`}>
-								<div className="schedule-results-game-status">{game.gameStatus}</div>
-								<div className="schedule-results-team away">
-									<Logo teamId={game.teams.away.id} />
-									<span className="schedule-results-name">{game.teams.away.name}
-										<span className="schedule-results-record">({game.teams.away.record})</span>
-									</span>
-									<span className="schedule-results-score">{game.teams.away.score}</span>
-								</div>
-								<div className="schedule-results-team home">
-									<Logo teamId={game.teams.home.id} />
-									<span className="schedule-results-name">{game.teams.home.name}
-										<span className="schedule-results-record">({game.teams.home.record})</span>
-									</span>
-									<span className="schedule-results-score">{game.teams.home.score}</span>
-								</div>
-							</a>
-						</li>
-					)
+				return (
+					<li key={game.id} className={classGameStatus}>
+						<a href={`/game/${game.id}`}>
+							<div className="schedule-results-game-status">{game.gameStatus}</div>
+							<div className="schedule-results-team away">
+								<Logo teamId={game.teams.away.id} />
+								<span className="schedule-results-name">{game.teams.away.name}
+									<span className="schedule-results-record">({game.teams.away.record})</span>
+								</span>
+								<span className="schedule-results-score">{game.teams.away.score}</span>
+							</div>
+							<div className="schedule-results-team home">
+								<Logo teamId={game.teams.home.id} />
+								<span className="schedule-results-name">{game.teams.home.name}
+									<span className="schedule-results-record">({game.teams.home.record})</span>
+								</span>
+								<span className="schedule-results-score">{game.teams.home.score}</span>
+							</div>
+						</a>
+					</li>
+				)
 			});
 
 			return (

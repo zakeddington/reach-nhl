@@ -14,6 +14,7 @@ export function fetchScheduleGames(dateFrom, dateTo) {
 			const params = [
 				'schedule.linescore'
 			];
+			dispatch({ type: types.SCHEDULE_GAMES_FETCHING });
 			const scheduleGames = await ScheduleService.getScheduleGames(dateFrom, dateTo, params);
 			dispatch({ type: types.SCHEDULE_GAMES_FETCHED, scheduleGames });
 		} catch (error) {

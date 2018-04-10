@@ -14,6 +14,10 @@ const initialState = immutable({
 
 export default function reduce(state = initialState, action = {}) {
 	switch (action.type) {
+		case types.SCHEDULE_GAMES_FETCHING:
+			return state.merge({
+				scheduleIsLoading: true,
+			});
 		case types.SCHEDULE_GAMES_FETCHED:
 			return state.merge({
 				scheduleGames: action.scheduleGames,

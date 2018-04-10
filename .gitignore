@@ -34,3 +34,6 @@ public
 local
 tmp
 dist
+
+# Webstorm
+.idea

@@ -70,24 +70,26 @@ class ScheduleNav extends Component {
 	onNavClick(e, dateObj) {
 		e.preventDefault();
 
-		let curDateObj = dateObj;
-		let curNavDates = this.state.navDates;
-		let urlDate = curDateObj.day.format('YYYY-MM-DD');
+		if (!this.props.scheduleIsLoading) {
+			let curDateObj = dateObj;
+			let curNavDates = this.state.navDates;
+			let urlDate = curDateObj.day.format('YYYY-MM-DD');
 
-		_.forEach(curNavDates, (navDate) => {
-			if (curDateObj.day === navDate.day) {
-				navDate.isActive = true;
-			} else {
-				navDate.isActive = false;
-			}
-		});
+			_.forEach(curNavDates, (navDate) => {
+				if (curDateObj.day === navDate.day) {
+					navDate.isActive = true;
+				} else {
+					navDate.isActive = false;
+				}
+			});
 
-		this.setState({
-			selectedDate: curDateObj.day,
-			navDates: curNavDates
-		});
+			this.setState({
+				selectedDate: curDateObj.day,
+				navDates: curNavDates
+			});
 
-		this.props.fetchGames(urlDate, urlDate);
+			this.props.fetchGames(urlDate, urlDate);
+		}
 	}
 
 	onDatePickerChange(dateObj) {

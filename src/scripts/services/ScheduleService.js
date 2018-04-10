@@ -28,6 +28,8 @@ class ScheduleService {
 				let curStatus;
 				let awayScore = '';
 				let homeScore = '';
+				let awayOTL = game.teams.away.leagueRecord.ot ? `-${game.teams.away.leagueRecord.ot}` : '';
+				let homeOTL = game.teams.home.leagueRecord.ot ? `-${game.teams.home.leagueRecord.ot}` : '';
 
 				if (gameStatus.length) {
 					curStatus = gameStatus;
@@ -45,13 +47,13 @@ class ScheduleService {
 							id: game.teams.away.team.id,
 							name: game.teams.away.team.name,
 							score: awayScore,
-							record: `${game.teams.away.leagueRecord.wins}-${game.teams.away.leagueRecord.losses}-${game.teams.away.leagueRecord.ot}`,
+							record: `${game.teams.away.leagueRecord.wins}-${game.teams.away.leagueRecord.losses}${awayOTL}`,
 						},
 						home: {
 							id: game.teams.home.team.id,
 							name: game.teams.home.team.name,
 							score: homeScore,
-							record: `${game.teams.home.leagueRecord.wins}-${game.teams.home.leagueRecord.losses}-${game.teams.home.leagueRecord.ot}`,
+							record: `${game.teams.home.leagueRecord.wins}-${game.teams.home.leagueRecord.losses}${homeOTL}`,
 						}
 					}
 				}

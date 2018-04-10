@@ -4,6 +4,7 @@
 
 .loader {
 	margin: auto;
+	padding: 2rem 0;
 	text-align: center;
 	width: 5em;
 
@@ -17,15 +18,15 @@
 		width: 1em;
 
 		&.bounce1 {
-			animation-delay: 0.5s;
+			// animation-delay: 0.5s;
 		}
 
 		&.bounce2 {
-			animation-delay: 0.7s;
+			animation-delay: 0.2s;
 		}
 
 		&.bounce3 {
-			animation-delay: 0.9s;
+			animation-delay: 0.4s;
 		}
 	}
 }
