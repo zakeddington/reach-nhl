@@ -142,5 +142,14 @@
 				width: 100%;
 			}
 		}
+
+		&.no-border {
+			border-color: transparent;
+
+			span {
+				border-radius: 3px;
+				width: 100%;
+			}
+		}
 	}
 }

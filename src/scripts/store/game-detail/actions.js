@@ -27,7 +27,7 @@ export function fetchGameContent(gameId) {
 		try {
 			const gameContent = await GameDetailService.getGameContent(gameId);
 
-			console.log('actions fetchGameContent', gameContent);
+			// console.log('actions fetchGameContent', gameContent);
 
 			dispatch({ type: types.GAME_CONTENT_FETCHED, gameContent });
 		} catch (error) {
@@ -42,7 +42,7 @@ export function fetchPeriodSummary(gameId) {
 		try {
 			const periodSummary = await GameDetailService.getPeriodSummary(gameId);
 
-			console.log('actions fetchPeriodSummary', periodSummary);
+			// console.log('actions fetchPeriodSummary', periodSummary);
 
 			dispatch({ type: types.PERIOD_SUMMARY_FETCHED, periodSummary });
 		} catch (error) {

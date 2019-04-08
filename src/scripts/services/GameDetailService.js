@@ -70,60 +70,60 @@ class GameDetailService {
 		return results;
 	}
 
-async getGameContent(gameId) {
-	const data = await API.getGameContent(gameId);
-	const previewData = data.editorial.preview.items[0];
-	const recapData = data.editorial.recap.items[0];
-	const mediaData = data.media.epg;
+	async getGameContent(gameId) {
+		const data = await API.getGameContent(gameId);
+		const previewData = data.editorial.preview.items[0];
+		const recapData = data.editorial.recap.items[0];
+		const mediaData = data.media.epg;
 
-	let isRecap = false;
-	let title;
-	let desc;
-	let poster;
-	let posterAltText;
-	let recapVideo;
-	let recapPoster;
+		let isRecap = false;
+		let title;
+		let desc;
+		let poster;
+		let posterAltText;
+		let recapVideo;
+		let recapPoster;
 
-	if (previewData) {
-		title = previewData.headline;
-		desc = previewData.seoDescription;
-		poster = previewData.media.image.cuts['1284x722'].src;
-		posterAltText = previewData.media.image.altText;
+		if (previewData) {
+			title = previewData.headline;
+			desc = previewData.seoDescription;
+			poster = previewData.media.image.cuts['1284x722'].src;
+			posterAltText = previewData.media.image.altText;
+		}
+
+		if (recapData) {
+			isRecap = true;
+			title = recapData.headline;
+			desc = recapData.seoDescription;
+
+			_.forEach(mediaData, (item) => {
+				if (item.title === 'Recap') {
+					let videos = item.items[0].playbacks;
+					recapPoster = item.items[0].image.cuts['1136x640'].src;
+
+					_.forEach(videos, (video) => {
+						if (video.name === 'FLASH_1800K_960X540') {
+							recapVideo = video.url;
+						}
+					});
+				}
+			});
+		}
+
+		let results = {
+			isRecap: isRecap,
+			title: title,
+			desc: desc,
+			poster: poster,
+			posterAltText: posterAltText,
+			recapVideo: recapVideo,
+			recapPoster: recapPoster,
+		}
+
+		// console.log('getGameContent', results);
+
+		return results;
 	}
-
-	if (recapData) {
-		isRecap = true;
-		title = recapData.headline;
-		desc = recapData.seoDescription;
-
-		_.forEach(mediaData, (item) => {
-			if (item.title === 'Recap') {
-				let videos = item.items[0].playbacks;
-				recapPoster = item.items[0].image.cuts['1136x640'].src;
-
-				_.forEach(videos, (video) => {
-					if (video.name === 'FLASH_1800K_960X540') {
-						recapVideo = video.url;
-					}
-				});
-			}
-		});
-	}
-
-	let results = {
-		isRecap: isRecap,
-		title: title,
-		desc: desc,
-		poster: poster,
-		posterAltText: posterAltText,
-		recapVideo: recapVideo,
-		recapPoster: recapPoster,
-	}
-
-	console.log('getGameContent', results);
-
-	return results;
-}
 
 	async getPeriodSummary(gameId) {
 		const data = await API.getGame(gameId);
@@ -131,16 +131,20 @@ async getGameContent(gameId) {
 		const scoringIds = _.get(data, 'liveData.plays.scoringPlays');
 		const penaltyIds = _.get(data, 'liveData.plays.penaltyPlays');
 		const allPlays = _.get(data, 'liveData.plays.allPlays');
+		const hasShootout = _.get(data, 'liveData.linescore.hasShootout');
 		const teamAwayId = data.gameData.teams.away.id;
 		const teamHomeId = data.gameData.teams.home.id;
 
 		let periodPlays = [];
 
 		_.forEach(periods, (period) => {
+			let periodName = period.ordinalNum === 'OT' ? 'Overtime' : `${period.ordinalNum} Period`;
+
 			periodPlays.push({
-				periodName: period.ordinalNum,
+				periodName: periodName,
 				goals: [],
 				penalties: [],
+				shootoutPlays: [],
 			});
 		});
 
@@ -153,7 +157,7 @@ async getGameContent(gameId) {
 
 			if (curPeriodIndex < periods.length) {
 				_.forEach(curPlay.players, (player) => {
-					if (player.playerType === "Scorer") {
+					if (player.playerType === 'Scorer') {
 						curScorer = {
 							name: player.player.fullName,
 							total: player.seasonTotal,
@@ -162,7 +166,7 @@ async getGameContent(gameId) {
 						}
 					}
 
-					if (player.playerType === "Assist") {
+					if (player.playerType === 'Assist') {
 						curAssists.push({
 							name: player.player.fullName,
 							total: player.seasonTotal,
@@ -203,7 +207,7 @@ async getGameContent(gameId) {
 
 			if (curPeriodIndex < periods.length) {
 				_.forEach(curPlay.players, (player) => {
-					if (player.playerType === "PenaltyOn") {
+					if (player.playerType === 'PenaltyOn') {
 						curPenaltyOn = {
 							name: player.player.fullName,
 							photo: `${CONSTANTS.imgUrl.player.base}${player.player.id}${CONSTANTS.imgUrl.player.ext}`,
@@ -223,7 +227,72 @@ async getGameContent(gameId) {
 			}
 		});
 
+		if (hasShootout) {
+			const shootoutPlays = this.getShootoutSummary(data);
+			periodPlays.push({
+				periodName: 'Shootout',
+				goals: [],
+				penalties: [],
+				shootoutPlays: shootoutPlays
+			});
+		}
+
 		return periodPlays;
+	}
+
+	getShootoutSummary(data) {
+		const playsByPeriod = _.get(data, 'liveData.plays.playsByPeriod');
+		let playIds = playsByPeriod[4].plays;
+		const allPlays = _.get(data, 'liveData.plays.allPlays');
+
+		let shootoutPlays = [];
+
+		_.forEach(playIds, (id) => {
+			let curPlay = allPlays[id];
+			let curShooter;
+
+			if (curPlay.players) {
+				let shootingTeamId = curPlay.team.id;
+				let isGoal = false;
+				let shotResult = '';
+
+				switch (curPlay.result.event) {
+					case 'Goal':
+						isGoal = true;
+						shotResult = 'Goal';
+						break;
+					case 'Shot':
+						shotResult = 'Save';
+						break;
+					case 'Missed Shot':
+						shotResult = 'Miss';
+						break;
+					default:
+						break;
+				}
+
+				_.forEach(curPlay.players, (player) => {
+					if (player.playerType === 'Scorer' || player.playerType === 'Shooter') {
+						curShooter = {
+							name: player.player.fullName,
+							desc: curPlay.result.secondaryType,
+							photo: `${CONSTANTS.imgUrl.player.base}${player.player.id}${CONSTANTS.imgUrl.player.ext}`,
+						}
+					}
+				});
+
+				let playDetail = {
+					shooter: curShooter,
+					isGoal: isGoal,
+					shotResult: shotResult,
+					teamId: shootingTeamId,
+				}
+
+				shootoutPlays.push(playDetail);
+			}
+		});
+
+		return shootoutPlays;
 	}
 }
 

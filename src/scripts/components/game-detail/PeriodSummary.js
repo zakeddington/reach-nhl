@@ -3,9 +3,48 @@ import Logo from '../Logo';
 import PlayerPhoto from '../PlayerPhoto';
 
 class PeriodSummary extends Component {
+	renderShootoutPlays(period) {
+		let shootoutPlays = period.shootoutPlays.map((play, index) => {
+			return (
+				<div key={index} className="period-summary-item">
+					<div className="period-summary-logo">
+						<Logo teamId={play.teamId} />
+					</div>
+					<div className="period-summary-time"></div>
+					<div className="period-summary-photo">
+						<PlayerPhoto photoUrl={play.shooter.photo} />
+					</div>
+					<div className="period-summary-player-info">
+						<span className="period-summary-player">
+							<span className="period-summary-name">{play.shooter.name}{play.shooter.desc ? ',' : ''}</span>
+							<span className="period-summary-goal-desc">{play.shooter.desc}</span>
+						</span>
+					</div>
+					<div className="period-summary-game-info">
+						<span className={`period-summary-score team-${play.teamId} no-border`}>
+							{
+								play.isGoal ? <span className="team-background">{play.shotResult}</span> : <span>{play.shotResult}</span>
+							}
+						</span>
+					</div>
+				</div>
+			)
+		});
+
+		return shootoutPlays;
+	}
 
 	renderContent(data) {
 		let periods = data.map((period) => {
+			if (period.shootoutPlays.length) {
+				let shootoutPlays = this.renderShootoutPlays(period);
+				return (
+					<div key={period.periodName} className="period-summary-period">
+						<h3 className="period-summary-title">{period.periodName}</h3>
+						{shootoutPlays}
+					</div>
+				)
+			}
 			let goals = period.goals.map((goal) => {
 				return (
 					<div key={goal.time} className="period-summary-item">
@@ -92,7 +131,7 @@ class PeriodSummary extends Component {
 
 			return (
 				<div key={period.periodName} className="period-summary-period">
-					<h3 className="period-summary-title">{period.periodName} Period</h3>
+					<h3 className="period-summary-title">{period.periodName}</h3>
 					<div className="period-summary-subtitle">Goals</div>
 					{goals}
 					<div className="period-summary-subtitle">Penalties</div>
