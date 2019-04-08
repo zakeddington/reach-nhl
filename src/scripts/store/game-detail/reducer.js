@@ -23,6 +23,10 @@ export default function reduce(state = initialState, action = {}) {
 			return state.merge({
 				gameContent: action.gameContent
 			});
+		case types.GAME_CONTENT_FAILED:
+			return state.merge({
+				gameContent: {error: true}
+			});
 		case types.PERIOD_SUMMARY_FETCHED:
 			return state.merge({
 				periodSummary: action.periodSummary

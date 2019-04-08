@@ -28,10 +28,21 @@ class GameIntro extends Component {
 		);
 	}
 
+	renderNoContent() {
+		return (
+			<div className="game-intro">
+				<h2>No content available</h2>
+			</div>
+		);
+	}
+
 	render() {
 		let data = this.props.gameContent;
 
 		if (data.length || Object.keys(data).length) {
+			if (data.error) {
+				return this.renderNoContent();
+			}
 			return this.renderContent(data);
 		}
 
