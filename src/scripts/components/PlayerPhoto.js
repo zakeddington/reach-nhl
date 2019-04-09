@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import autoBind from 'react-autobind';
 
 class PlayerPhoto extends Component {
-
-	constructor(props) {
-		super(props);
-		autoBind(this);
-	}
-
 	render() {
 		return (
 			<div className="player-photo">

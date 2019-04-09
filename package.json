@@ -17,7 +17,6 @@
 	"dependencies": {
 		"moment": "^2.22.0",
 		"react": "^16.2.0",
-		"react-autobind": "^1.0.6",
 		"react-datepicker": "^1.4.1",
 		"react-dom": "^16.2.0",
 		"react-router": "^4.2.0",

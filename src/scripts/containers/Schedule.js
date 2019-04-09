@@ -4,7 +4,6 @@
 // avoid having view logic & local component state in them, use "dumb" components instead
 
 import React, { Component } from 'react';
-import autoBind from 'react-autobind';
 // import moment from 'moment';
 import { connect } from 'react-redux';
 import * as actions from '../store/schedule/actions';
@@ -14,11 +13,6 @@ import ScheduleResults from '../components/schedule/ScheduleResults';
 import CONSTANTS from '../config/Constants';
 
 class Schedule extends Component {
-
-	constructor(props) {
-		super(props);
-		autoBind(this);
-	}
 
 	componentWillMount() {
 		let today = this.props.scheduleStartDate.format(CONSTANTS.momentOptions.apiFormat);
@@ -30,7 +24,7 @@ class Schedule extends Component {
 			<div className="site-content container">
 				<ScheduleNav
 					history={this.props.history}
-					fetchGames={this.onNavClick}
+					fetchGames={(startDate, endDate) => {this.onNavClick(startDate, endDate)}}
 					scheduleStartDate={this.props.scheduleStartDate}
 					scheduleIsLoading={this.props.scheduleIsLoading}
 				/>

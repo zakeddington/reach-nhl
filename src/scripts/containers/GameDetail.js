@@ -4,7 +4,6 @@
 // avoid having view logic & local component state in them, use "dumb" components instead
 
 import React, { Component } from 'react';
-import autoBind from 'react-autobind';
 import { connect } from 'react-redux';
 import * as actions from '../store/game-detail/actions';
 import * as reducer from '../store/game-detail/reducer';
@@ -16,11 +15,6 @@ import TeamStats from '../components/game-detail/TeamStats';
 import PeriodSummary from '../components/game-detail/PeriodSummary';
 
 class GameDetail extends Component {
-
-	constructor(props) {
-		super(props);
-		autoBind(this);
-	}
 
 	componentDidMount() {
 		let path = this.props.location.pathname;

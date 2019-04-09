@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import autoBind from 'react-autobind';
 import DatePicker from 'react-datepicker';
 import CONSTANTS from '../../config/Constants';
 
 class DatepickerTrigger extends Component {
 	render () {
 		return (
-			<button className="datepicker-trigger" onClick={this.props.onClick} value={this.props.value}>
+			<button className="datepicker-trigger" onClick={() => this.props.onClick()} value={this.props.value}>
 				<svg className="icon-calendar">
 					<use xlinkHref="/assets/images/icons.svg#icon-calendar"></use>
 				</svg>
@@ -17,12 +16,6 @@ class DatepickerTrigger extends Component {
 }
 
 class ScheduleNav extends Component {
-
-	constructor(props) {
-		super(props);
-		autoBind(this);
-	}
-
 	componentWillMount() {
 		this.setNavDates(this.props.scheduleStartDate);
 	}
@@ -121,7 +114,7 @@ class ScheduleNav extends Component {
 				<DatePicker
 					customInput={<DatepickerTrigger />}
 					selected={this.state.selectedDate}
-					onChange={this.onDatePickerChange}
+					onChange={(dateObj) => this.onDatePickerChange(dateObj)}
 					todayButton="Today" />
 				<ul className="schedule-nav-items">
 					{

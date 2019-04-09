@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import autoBind from 'react-autobind';
 
 class VideoPlayer extends Component {
 
-	constructor(props) {
-		super(props);
-		autoBind(this);
-
-		this.state = {showVideo: this.props.showVideo};
+	state = {
+		showVideo: this.props.showVideo
 	}
 
 	onClick() {
@@ -16,7 +12,7 @@ class VideoPlayer extends Component {
 
 	renderPoster() {
 		return(
-			<button className="video-trigger" onClick={this.onClick}>
+			<button className="video-trigger" onClick={() => this.onClick()}>
 				<img src={this.props.poster} alt={this.props.altText} />
 				<svg className="icon-play">
 					<use xlinkHref="/assets/images/icons.svg#icon-play-circle-filled"></use>
