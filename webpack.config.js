@@ -24,7 +24,7 @@ module.exports = {
 	// Define our entry files
 	//
 	entry: {
-		vendor: ['babel-polyfill'],
+		vendor: ['@babel/polyfill'],
 		app: [`${CONFIG_PATHS.src.scripts}/app.js`, `${CONFIG_PATHS.src.styles}/app.scss`],
 	},
 	//
@@ -142,7 +142,7 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['env', 'react-app'],
+						presets: ['@babel/env', 'react-app'],
 						compact: OPTIONS.minimize,
 					}
 				}
