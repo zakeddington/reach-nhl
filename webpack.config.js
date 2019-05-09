@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
@@ -27,6 +27,23 @@ module.exports = {
 		vendor: ['@babel/polyfill'],
 		app: [`${CONFIG_PATHS.src.scripts}/app.js`, `${CONFIG_PATHS.src.styles}/app.scss`],
 	},
+	optimization: {
+		namedModules: true,
+		runtimeChunk: true,
+		splitChunks: {
+			chunks: 'all',
+			cacheGroups: {
+				commons: { // combine shared code between entry points
+					name: 'commons',
+					chunks: 'initial',
+					minChunks: 2
+				},
+			}
+		},
+		runtimeChunk: {
+			name: 'manifest', // consolidate webpack's map of all modules into one 'manifest' file
+		}
+	},
 	//
 	// Define our output files
 	//
@@ -44,14 +61,14 @@ module.exports = {
 		new HardSourceWebpackPlugin(),
 		// Create our JS entry files and
 		// consolidate webpack's map of all modules into one 'manifest' file
-		new webpack.optimize.CommonsChunkPlugin({
-			names: ['app', 'vendor', 'manifest'],
-			minChunks: Infinity,
-		}),
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	names: ['app', 'vendor', 'manifest'],
+		// 	minChunks: Infinity,
+		// }),
 		// Lint our CSS
 		new StyleLintPlugin(),
 		// Create our CSS entry files
-		new ExtractTextPlugin({
+		new MiniCssExtractPlugin({
 			filename: `${CONFIG_PATHS.output.styles}/[name].css`,
 		}),
 		new HtmlWebPackPlugin({
@@ -97,34 +114,33 @@ module.exports = {
 			{
 				test: /\.scss$/,
 				include: CONFIG_PATHS.src.styles,
-				use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-					use: [
-						{
-							loader: 'css-loader',
-							options: {
-								minimize: OPTIONS.minimize,
-								sourceMap: OPTIONS.sourceMap,
-							},
+				use: [
+					'css-hot-loader',
+					MiniCssExtractPlugin.loader,
+					{
+						loader: 'css-loader',
+						options: {
+							sourceMap: OPTIONS.sourceMap,
 						},
-						{
-							loader: 'postcss-loader',
-							options: {
-								sourceMap: OPTIONS.sourceMap,
-							}
-						},
-						{
-							loader: 'sass-loader',
-							options: {
-								sourceMap: OPTIONS.sourceMap,
-							}
+					},
+					{
+						loader: 'postcss-loader',
+						options: {
+							sourceMap: OPTIONS.sourceMap,
 						}
-					]
-				}))
+					},
+					{
+						loader: 'sass-loader',
+						options: {
+							sourceMap: OPTIONS.sourceMap,
+						}
+					}
+				]
 			},
 			// HTML using EJS templates
 			{
 				test: /\.ejs$/,
-				loader: 'ejs-compiled-loader',
+				loader: 'compile-ejs-loader',
 				include: CONFIG_PATHS.src.html,
 			},
 			// JS linter

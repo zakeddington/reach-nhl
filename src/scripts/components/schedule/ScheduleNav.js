@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import CONSTANTS from '../../config/Constants';
 
 class DatepickerTrigger extends Component {
@@ -85,7 +86,8 @@ class ScheduleNav extends Component {
 		}
 	}
 
-	onDatePickerChange(dateObj) {
+	onDatePickerChange(dateStr) {
+		let dateObj = moment(dateStr);
 		let urlDate = dateObj.format(CONSTANTS.momentOptions.apiFormat);
 
 		this.props.history.push(`${CONSTANTS.routePaths.schedule}${urlDate}`);
@@ -113,8 +115,8 @@ class ScheduleNav extends Component {
 			<div className="schedule-nav">
 				<DatePicker
 					customInput={<DatepickerTrigger />}
-					selected={this.state.selectedDate}
-					onChange={(dateObj) => this.onDatePickerChange(dateObj)}
+					selected={this.state.selectedDate.toDate()}
+					onChange={(dateStr) => this.onDatePickerChange(dateStr)}
 					todayButton="Today" />
 				<ul className="schedule-nav-items">
 					{
