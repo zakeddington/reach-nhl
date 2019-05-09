@@ -3,14 +3,13 @@ import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import CONSTANTS from '../../config/Constants';
+import Icon from '../Icon';
 
 class DatepickerTrigger extends Component {
 	render () {
 		return (
 			<button className="datepicker-trigger" onClick={() => this.props.onClick()} value={this.props.value}>
-				<svg className="icon-calendar">
-					<use xlinkHref="/assets/images/icons.svg#icon-calendar"></use>
-				</svg>
+				<Icon iconId="calendar" />
 			</button>
 		)
 	}

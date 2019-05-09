@@ -10,6 +10,9 @@ const Constants = {
 	},
 
 	imgUrl: {
+		icon: {
+			base: '/assets/images/icons.svg#icon-',
+		},
 		logoTeams: {
 			base: '/assets/images/logo-teams.svg#team-',
 		},

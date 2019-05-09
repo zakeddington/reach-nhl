@@ -9,7 +9,7 @@
 	position: relative;
 	width: 100%;
 
-	.icon-play {
+	.svg-icon {
 		display: block;
 		fill: $color-white;
 		height: 10em;
@@ -18,7 +18,6 @@
 		position: absolute;
 		top: 50%;
 		transform: translate(-50%, -50%);
-		transition: all $anim-speed $anim-ease;
 		width: 10em;
 
 		@media (min-width: $breakpoint-tablet-min) and (max-width: $breakpoint-tablet-max) {
@@ -34,7 +33,7 @@
 
 	&:hover,
 	&:focus {
-		.icon-play {
+		.svg-icon {
 			opacity: 1;
 		}
 	}

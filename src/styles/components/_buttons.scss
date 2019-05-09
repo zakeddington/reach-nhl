@@ -3,32 +3,38 @@
 // -----------------------------------------------------------------+
 
 .button {
-	background: rgba($color-black, 0.6);
-	color: $color-white;
+	background: none;
+	border: none;
+	color: $color-grey-dark;
 	display: inline-block;
 	font-family: $font-main;
 	font-weight: 700;
-	line-height: 1;
-	margin: 0 auto 5px;
-	padding: 0.75em 1.25em;
+	margin: 0 auto 0.5rem;
+	padding: 0.5rem 1rem;
 	position: relative;
 	text-decoration: none;
 	text-transform: uppercase;
 	transition: all $anim-speed ease-in;
 
-	&:hover,
-	&:focus {
-		background: rgba($color-black, 0.75);
-		color: $color-white;
-		text-decoration: none;
+	.svg-icon {
+		fill: $color-grey-dark;
 	}
 
-	&.blue {
-		background: $color-blue;
+	&:hover,
+	&:focus {
+		color: $color-link-hover;
+		text-decoration: none;
 
-		&:hover,
-		&:focus {
-			background: darken($color-blue, 10%);
+		.svg-icon {
+			fill: $color-link-hover;
+		}
+	}
+
+	&--icon-left {
+		padding-left: 0.25rem;
+
+		.svg-icon {
+			margin-right: 0.25rem;
 		}
 	}
 }

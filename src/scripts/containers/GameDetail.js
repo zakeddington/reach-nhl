@@ -13,6 +13,7 @@ import Scoreboard from '../components/game-detail/Scoreboard';
 import Stars from '../components/game-detail/Stars';
 import TeamStats from '../components/game-detail/TeamStats';
 import PeriodSummary from '../components/game-detail/PeriodSummary';
+import Icon from '../components/Icon';
 
 class GameDetail extends Component {
 
@@ -26,8 +27,13 @@ class GameDetail extends Component {
 	}
 
 	render() {
+		console.log(this);
 		return (
 			<div className="site-content container">
+				<button className="button button--icon-left" onClick={this.props.history.goBack}>
+					<Icon iconId="arrow-left" />
+					Back
+				</button>
 				<GameHeader gameDetail={this.props.gameDetail} />
 				<GameIntro gameContent={this.props.gameContent} />
 				<div className="scoreboard-stars">

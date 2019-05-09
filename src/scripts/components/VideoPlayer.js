@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Icon from './Icon';
 
 class VideoPlayer extends Component {
 
@@ -14,9 +15,7 @@ class VideoPlayer extends Component {
 		return(
 			<button className="video-trigger" onClick={() => this.onClick()}>
 				<img src={this.props.poster} alt={this.props.altText} />
-				<svg className="icon-play">
-					<use xlinkHref="/assets/images/icons.svg#icon-play-circle-filled"></use>
-				</svg>
+				<Icon iconId="play-circle-filled" />
 			</button>
 		)
 	}

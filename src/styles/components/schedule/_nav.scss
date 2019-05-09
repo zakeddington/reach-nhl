@@ -31,10 +31,9 @@
 	text-transform: uppercase;
 	transition: all $anim-speed $anim-ease;
 
-	.icon-calendar {
+	.svg-icon {
 		fill: $color-white;
 		height: 1.5rem;
-		transition: all $anim-speed $anim-ease;
 		width: 1.5rem;
 	}
 
@@ -43,7 +42,7 @@
 		background: $color-grey-light;
 		color: $color-grey-dark;
 
-		.icon-calendar {
+		.svg-icon {
 			fill: $color-grey-dark;
 		}
 	}
